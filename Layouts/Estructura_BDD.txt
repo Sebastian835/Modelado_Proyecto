@@ -1,0 +1,47 @@
+Colección: Clientes
+ID de cliente
+Nombre
+Apellido
+Dirección
+Número de teléfono
+Correo electrónico
+
+
+Colección: Pedidos
+ID de pedido
+ID de cliente (referencia al cliente que realizó el pedido)
+Fecha y hora del pedido
+Dirección de destino
+Descripción del paquete
+Estado del pedido (por ejemplo, pendiente, en tránsito, entregado)
+
+
+Colección: Repartidores
+ID de repartidor
+Nombre
+Apellido
+Número de teléfono
+Vehículo (puede ser un objeto con atributos como tipo de vehículo, placa y modelo)
+
+
+Colección: Rutas
+ID de ruta
+ID de repartidor (referencia al repartidor asignado a la ruta)
+Lista de pedidos (puede ser una lista de ID de pedidos que se entregarán en esa ruta)
+Fecha y hora de salida
+Estado de la ruta (por ejemplo, en progreso, completada)
+
+
+Colección: Pagos
+ID de pago
+ID de pedido (referencia al pedido al que corresponde el pago)
+Monto
+Fecha y hora del pago
+Método de pago (por ejemplo, efectivo, tarjeta de crédito)
+
+
+Colección: Calificaciones
+ID de calificación
+ID de pedido (referencia al pedido que se está calificando)
+Puntuación (por ejemplo, en una escala de 1 a 5 estrellas)
+Comentario (opcional, para dejar un comentario adicional)
