@@ -28,7 +28,6 @@ Colección: Rutas
 ID de ruta
 ID de repartidor (referencia al repartidor asignado a la ruta)
 Lista de pedidos (puede ser una lista de ID de pedidos que se entregarán en esa ruta)
-Fecha y hora de salida
 Estado de la ruta (por ejemplo, en progreso, completada)
 
 
@@ -36,8 +35,8 @@ Colección: Pagos
 ID de pago
 ID de pedido (referencia al pedido al que corresponde el pago)
 Monto
-Fecha y hora del pago
 Método de pago (por ejemplo, efectivo, tarjeta de crédito)
+Pagado (Si o no)
 
 
 Colección: Calificaciones
