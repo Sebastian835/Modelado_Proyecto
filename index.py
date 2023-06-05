@@ -22,7 +22,7 @@ app._static_folder = os.path.abspath("templates/static/")                       
 def home():
     return render_template("layouts/home.html")
 
-
+#--CLIENTES--
 @app.route("/clientes", methods=["GET", "POST"])  
 def clientes():
     clientes_collection = baseDatos["Clientes"]
@@ -41,7 +41,6 @@ def RegistroCliente():
             nuevo_id = ultimo_id + 1
         nuevo_id_str = str(nuevo_id).zfill(3)
 
-
         nombre = request.form['nombre']
         apellido = request.form['apellido']
         direccion = request.form['direccion']
@@ -55,13 +54,18 @@ def RegistroCliente():
             "NumeroTelefono": telefono,
             "CorreoElectronico": correo
         }
-        
         baseDatos.Clientes.insert_one(cliente)
-        
         return redirect(url_for('clientes'))
 
-
     return render_template("layouts/clientes.html")
+
+#--REPARTIDORES--
+@app.route("/repartidores", methods=["GET", "POST"])  
+def repartidores():
+    repartidores_collection = baseDatos["Repartidores"]
+    resultados = repartidores_collection.find()
+
+    return render_template("layouts/repartidores.html", repartidores_datos=resultados)
 
 
 # main del programa
