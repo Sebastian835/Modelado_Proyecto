@@ -1,0 +1,15 @@
+.form-control.input-sm {
+  height: 50%;
+  padding: 8px;
+  font-size: 15px;
+  width: 50%;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 15px;
+}
+
+.formulario2 {
+  flex-grow: 1;
+}
