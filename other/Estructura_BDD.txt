@@ -13,7 +13,6 @@ ID de cliente (referencia al cliente que realizó el pedido)
 Fecha y hora del pedido
 Dirección de destino
 Descripción del paquete
-Estado del pedido (por ejemplo, pendiente, en tránsito, entregado)
 
 
 Colección: Repartidores
