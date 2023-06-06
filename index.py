@@ -48,13 +48,15 @@ def RegistroCliente():
         direccion = request.form['direccion']
         telefono = request.form['telefono']
         correo = request.form['correo']
+        cedula = request.form['cedula']
         cliente = {
             "_id": nuevo_id_str,
             "Nombre": nombre,
             "Apellido": apellido,
             "Direccion": direccion,
             "NumeroTelefono": telefono,
-            "CorreoElectronico": correo
+            "CorreoElectronico": correo,
+            "Cedula": cedula,
         }
         baseDatos.Clientes.insert_one(cliente)
         return redirect(url_for('clientes'))
