@@ -39,6 +39,8 @@ def RegistroCliente():
         if ultimo_documento is not None:
             ultimo_id = int(ultimo_documento['_id'])
             nuevo_id = ultimo_id + 1
+        else:
+            nuevo_id = 1
         nuevo_id_str = str(nuevo_id).zfill(3)
 
         nombre = request.form['nombre']

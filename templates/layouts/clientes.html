@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="static/css/navbar.css">
     <link rel="stylesheet" href="static/css/clientes.css">
 
-    <title>ServiEntregas</title>
+    <title>ServiEntrega</title>
 
     <style>
         .formulario {
@@ -34,7 +34,7 @@
                 <a href="/" class="font-weight-light link-unstyled">Home</a>
             </div>
             <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/clientes" class="font-weight-light link-unstyled">Cientes</a>
+                <a href="/clientes" class="font-weight-light link-unstyled">Clentes</a>
             </div>
             <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
                 <a href="/repartidores" class="font-weight-light link-unstyled">Repartidores</a>
@@ -46,52 +46,69 @@
 
         <!--BODY-->
         <div class="row">
-            <div class="col-2">
-                <button onclick="AgregarCliente()" type="button" class="btn btn-info">Ingresar Cliente</button>
-                <form class="AgregarCliente" action="/RegistroCliente" method="post" style="display: none;">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="d-grid gap-2">
+                        <button onclick="AgregarCliente()" type="button" class="btn btn-info">Ingresar Cliente</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <form class="AgregarCliente" action="/RegistroCliente" method="post">
                     <div class="form-group mb-3">
                         <label for="nombre">Nombre:</label>
-                        <input type="text" class="form-control input-sm" id="nombre" name="nombre" required>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="apellido">Apellido:</label>
-                        <input type="text" class="form-control input-sm" id="apellido" name="apellido" required>
+                        <input type="text" class="form-control" id="apellido" name="apellido" required>
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="direccion">Dirección:</label>
-                        <input type="text" class="form-control input-sm" id="direccion" name="direccion" required>
+                        <input type="text" class="form-control" id="direccion" name="direccion" required>
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="telefono">Número de teléfono:</label>
-                        <input type="number" class="form-control input-sm" id="telefono" name="telefono" required>
+                        <input type="number" class="form-control" id="telefono" name="telefono" required>
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="correo">Correo electrónico:</label>
-                        <input type="email" class="form-control input-sm" id="correo" name="correo" required>
+                        <input type="email" class="form-control" id="correo" name="correo" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-
-                </form>
-                <br>
-            </div>
-            <div class="col-2">
-                <button onclick="EliminarCliente()" type="button" class="btn btn-danger">Eliminar Cliente</button>
-                <form class="EliminarCliente" action="/EliminarCliente" method="post" style="display: none;">
-                    <div class="form-group mb-3">
-                        <label for="nombre">Id del Cliente:</label>
-                        <input type="text" class="form-control input-sm" id="_id" name="_id" required>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Eliminar</button>
                 </form>
             </div>
+        </div>
+        <br>
+        <div class="col-4">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="d-grid gap-2">
+                        <button onclick="EliminarCliente()" type="button" class="btn btn-danger">Eliminar Cliente</button>
+                    </div>
+                </div>
+            </div>
+            <form class="EliminarCliente" action="/EliminarCliente" method="post">
+                <div class="form-group mb-3">
+                    <label for="_id">Id del Cliente:</label>
+                    <input type="text" class="form-control" id="_id" name="_id" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Eliminar</button>
+            </form>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="row justify-content-center">
             <div class="col-8">
-                <table>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>id</th>
@@ -116,10 +133,8 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-
+        </div>        
     </div>
-
 
 </body>
 
