@@ -1,5 +1,5 @@
 function toggleFormulario() {
-    var formulario = document.querySelector('.formulario');
+    var formulario = document.querySelector('.AgregaRepartidor');
     if (formulario.style.display === 'none') {
         formulario.style.display = 'block';
     } else {

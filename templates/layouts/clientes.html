@@ -46,9 +46,9 @@
 
         <!--BODY-->
         <div class="row">
-            <div class="col-4">
-                <button onclick="toggleFormulario()" type="button" class="btn btn-info">Ingresar Cliente</button>
-                <form class="formulario" action="/RegistroCliente" method="post">
+            <div class="col-2">
+                <button onclick="AgregarCliente()" type="button" class="btn btn-info">Ingresar Cliente</button>
+                <form class="AgregarCliente" action="/RegistroCliente" method="post" style="display: none;">
                     <div class="form-group mb-3">
                         <label for="nombre">Nombre:</label>
                         <input type="text" class="form-control input-sm" id="nombre" name="nombre" required>
@@ -75,8 +75,19 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
 
+                </form>
+                <br>
+            </div>
+            <div class="col-2">
+                <button onclick="EliminarCliente()" type="button" class="btn btn-danger">Eliminar Cliente</button>
+                <form class="EliminarCliente" action="/EliminarCliente" method="post" style="display: none;">
+                    <div class="form-group mb-3">
+                        <label for="nombre">Id del Cliente:</label>
+                        <input type="text" class="form-control input-sm" id="_id" name="_id" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                </form>
             </div>
 
             <div class="col-8">

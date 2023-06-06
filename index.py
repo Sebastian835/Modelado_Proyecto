@@ -59,6 +59,18 @@ def RegistroCliente():
 
     return render_template("layouts/clientes.html")
 
+@app.route("/EliminarCliente", methods=["GET", "POST"])  
+def EliminarCliente():
+    if(request.method == "POST"):
+        id = request.form['_id']
+        baseDatos.Clientes.delete_one({"_id": id})
+
+        return redirect(url_for('clientes'))
+
+    return render_template("layouts/clientes.html")
+
+
+
 #--REPARTIDORES--
 @app.route("/repartidores", methods=["GET", "POST"])  
 def repartidores():
