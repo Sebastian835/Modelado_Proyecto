@@ -113,6 +113,7 @@ def RegistroRepartidor():
         nombre = request.form['nombre']
         apellido = request.form['apellido']
         telefono = request.form['telefono']
+        cedula = request.form['cedula']
         vehiculo = {
             "Tipo": request.form['vehiculo'],
             "Placa": request.form['placa'],
@@ -123,7 +124,8 @@ def RegistroRepartidor():
             "Nombre": nombre,
             "Apellido": apellido,
             "NumeroTelefono": telefono,
-            "Vehiculo": vehiculo
+            "Vehiculo": vehiculo,
+            "Cedula" : cedula
         }
         baseDatos.Repartidores.insert_one(repartidor)
 

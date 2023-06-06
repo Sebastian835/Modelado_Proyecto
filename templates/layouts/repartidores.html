@@ -78,6 +78,7 @@
                         <th>id</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>Cedula</th>
                         <th>Número de teléfono</th>
                         <th>Vehiculo</th>
                         <th>Accion</th>
@@ -89,6 +90,7 @@
                         <td>{{ documento._id }}</td>
                         <td>{{ documento.Nombre }}</td>
                         <td>{{ documento.Apellido }}</td>
+                        <td>{{ documento.Cedula }}</td>
                         <td>{{ documento.NumeroTelefono }}</td>
                         <td>
                             <span class="vehiculo" data-placa="{{ documento.Vehiculo.Placa }}"
@@ -120,6 +122,11 @@
                 <div class="form-group mb-3">
                     <label for="apellido">Apellido:</label>
                     <input type="text" class="form-control input-sm" id="apellido" name="apellido" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="cedula">Cedula:</label>
+                    <input type="text" class="form-control input-sm" id="cedula" name="cedula" required>
                 </div>
 
                 <div class="form-group mb-3">
