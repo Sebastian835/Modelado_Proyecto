@@ -129,46 +129,54 @@
 
         <div class="row">
             <div class="col-12">
-                <form class="UpdateCliente" action="/UpdateCliente" method="post">
-                    <label>Ingrese ID del cliente:</label>
-                    <input type="text" class="form-control" id="_idCliente" name="_idCliente" required>
-                    <button type="submit" class="btn btn-primary">Buscar</button>
+
+                <div class="col-4">
+                    <form class="UpdateCliente" action="/UpdateCliente" method="post">
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="d-grid gap-2">
+                                    <label>Ingrese ID del cliente:</label>
+                                    <input type="text" class="form-control" id="_idCliente" name="_idCliente" required>
+                                    <button onclick="UpdateCliente()" type="submit" class="btn btn-info">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% for cliente in DatoCliente %}
+                        <div class="form-group mb-3">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                value="{{ cliente.Nombre }}" disabled>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="nombre">Apellido:</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido"
+                                value="{{ cliente.Apellido }}" disabled>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="nombre">Direccion:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion"
+                                value="{{ cliente.Direccion }}" disabled>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="nombre">Numero Teleforno:</label>
+                            <input type="text" class="form-control" id="telefono" name="telefono"
+                                value="{{ cliente.NumeroTelefono }}" disabled>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="nombre">Correo Electronico:</label>
+                            <input type="text" class="form-control" id="correo" name="correo"
+                                value="{{ cliente.CorreoElectronico }}" disabled>
+                        </div>
+                        {% endfor %}
 
 
-                    {% for cliente in DatoCliente %}
-                    <div class="form-group mb-3">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ cliente.Nombre }}"
-                            disabled>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="nombre">Apellido:</label>
-                        <input type="text" class="form-control" id="apellido" name="apellido"
-                            value="{{ cliente.Apellido }}" disabled>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="nombre">Direccion:</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion"
-                            value="{{ cliente.Direccion }}" disabled>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="nombre">Numero Teleforno:</label>
-                        <input type="text" class="form-control" id="telefono" name="telefono"
-                            value="{{ cliente.NumeroTelefono }}" disabled>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="nombre">Correo Electronico:</label>
-                        <input type="text" class="form-control" id="correo" name="correo"
-                            value="{{ cliente.CorreoElectronico }}" disabled>
-                    </div>
-                    {% endfor %}
-
-
-                </form>
+                    </form>
+                </div>
             </div>
 
         </div>

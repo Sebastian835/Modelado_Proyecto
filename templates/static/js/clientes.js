@@ -15,3 +15,6 @@ function UpdateCliente() {
         formulario.style.display = 'none';
     }
 }
+
+
+
