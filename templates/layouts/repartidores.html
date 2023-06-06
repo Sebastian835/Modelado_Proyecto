@@ -11,6 +11,37 @@
     <link rel="stylesheet" href="static/css/repartidores.css">
     <title>ServiEntregas</title>
 
+    <style>
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+    
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+    
+        thead {
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+    
+        .vehiculo {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            color: #333;
+            border-radius: 3px;
+        }
+    </style>
 
 </head>
 
@@ -28,7 +59,7 @@
                 <a href="/" class="font-weight-light link-unstyled">Home</a>
             </div>
             <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/clientes" class="font-weight-light link-unstyled">Cientes</a>
+                <a href="/clientes" class="font-weight-light link-unstyled">Clentes</a>
             </div>
             <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
                 <a href="/repartidores" class="font-weight-light link-unstyled">Repartidores</a>
@@ -39,89 +70,88 @@
         </section>
 
         <div class="row">
-            <div class="col-8">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Número de teléfono</th>
-                            <th>Vehiculo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for documento in repartidores_datos %}
-                        <tr>
-                            <td>{{ documento._id }}</td>
-                            <td>{{ documento.Nombre }}</td>
-                            <td>{{ documento.Apellido }}</td>
-                            <td>{{ documento.NumeroTelefono }}</td>
-                            <td>
-                                <span class="vehiculo" data-placa="{{ documento.Vehiculo.Placa }}"
-                                    data-modelo="{{ documento.Vehiculo.Modelo }}">
-                                    {{ documento.Vehiculo.Tipo }}
-                                </span>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-            <!--BODY-->
-            <div class="col-2">
-                <button onclick="AgregarRepartidor()" type="button" class="btn btn-info">Ingresar Repartidor</button>
-                <form class="AgregarRepartidor" action="/RegistroRepartidor" method="post" style="display: none;">
-                    <div class="form-group mb-3">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" class="form-control input-sm" id="nombre" name="nombre" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="apellido">Apellido:</label>
-                        <input type="text" class="form-control input-sm" id="apellido" name="apellido" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="telefono">Número de teléfono:</label>
-                        <input type="number" class="form-control input-sm" id="telefono" name="telefono" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="vehiculo">Tipo de vehículo</label>
-                        <select class="form-control" id="vehiculo" name="vehiculo" onchange="mostrarOpciones()">
-                            <option value="" disabled selected hidden>Seleccionar...</option>
-                            <option value="Automovil">Automóvil</option>
-                            <option value="Moto">Moto</option>
-                        </select>
-                    </div>
-                    <div id="opciones" style="display: none;">
-                        <div class="form-group">
-                            <label for="marca">Placa</label>
-                            <input type="text" class="form-control" id="placa" name="placa">
-                        </div>
-                        <div class="form-group">
-                            <label for="modelo">Modelo</label>
-                            <input type="text" class="form-control" id="modelo" name="modelo">
-                        </div>
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
-            </div>
-            <div class="col-2">
-                <button onclick="EliminarRepartidor()" type="button" class="btn btn-danger">Eliminar Repartidor</button>
-                <form class="EliminarRepartidor" action="/EliminarRepartidor" method="post" style="display: none;">
-                    <div class="form-group mb-3">
-                        <label for="nombre">Id del Repartidor:</label>
-                        <input type="text" class="form-control input-sm" id="_id" name="_id" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Eliminar</button>
-                </form>
-            </div>
-
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Número de teléfono</th>
+                        <th>Vehiculo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for documento in repartidores_datos %}
+                    <tr>
+                        <td>{{ documento._id }}</td>
+                        <td>{{ documento.Nombre }}</td>
+                        <td>{{ documento.Apellido }}</td>
+                        <td>{{ documento.NumeroTelefono }}</td>
+                        <td>
+                            <span class="vehiculo" data-placa="{{ documento.Vehiculo.Placa }}"
+                                data-modelo="{{ documento.Vehiculo.Modelo }}">
+                                {{ documento.Vehiculo.Tipo }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+
+        <!--BODY-->
+        <div class="col-2">
+            <button onclick="AgregarRepartidor()" type="button" class="btn btn-info">Ingresar Repartidor</button>
+            <form class="AgregarRepartidor" action="/RegistroRepartidor" method="post" style="display: none;">
+                <div class="form-group mb-3">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control input-sm" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" class="form-control input-sm" id="apellido" name="apellido" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="telefono">Número de teléfono:</label>
+                    <input type="number" class="form-control input-sm" id="telefono" name="telefono" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="vehiculo">Tipo de vehículo</label>
+                    <select class="form-control" id="vehiculo" name="vehiculo" onchange="mostrarOpciones()">
+                        <option value="" disabled selected hidden>Seleccionar...</option>
+                        <option value="Automovil">Automóvil</option>
+                        <option value="Moto">Moto</option>
+                    </select>
+                </div>
+                <div id="opciones" style="display: none;">
+                    <div class="form-group">
+                        <label for="marca">Placa</label>
+                        <input type="text" class="form-control" id="placa" name="placa">
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" class="form-control" id="modelo" name="modelo">
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+        <div class="col-2">
+            <button onclick="EliminarRepartidor()" type="button" class="btn btn-danger">Eliminar Repartidor</button>
+            <form class="EliminarRepartidor" action="/EliminarRepartidor" method="post" style="display: none;">
+                <div class="form-group mb-3">
+                    <label for="nombre">Id del Repartidor:</label>
+                    <input type="text" class="form-control input-sm" id="_id" name="_id" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Eliminar</button>
+            </form>
+        </div>
+
+    </div>
     </div>
 
 </body>
