@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for   
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import os
 import pymongo
 from dotenv import load_dotenv
