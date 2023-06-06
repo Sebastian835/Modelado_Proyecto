@@ -1,5 +1,14 @@
-function toggleFormulario() {
-    var formulario = document.querySelector('.AgregaRepartidor');
+function AgregarRepartidor() {
+    var formulario = document.querySelector('.AgregarRepartidor');
+    if (formulario.style.display === 'none') {
+        formulario.style.display = 'block';
+    } else {
+        formulario.style.display = 'none';
+    }
+}
+
+function EliminarRepartidor() {
+    var formulario = document.querySelector('.EliminarRepartidor');
     if (formulario.style.display === 'none') {
         formulario.style.display = 'block';
     } else {

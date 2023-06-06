@@ -114,6 +114,18 @@ def RegistroRepartidor():
 
     return render_template("layouts/repartidores.html")
 
+@app.route("/EliminarRepartidor", methods=["GET", "POST"])  
+def EliminarRepartidor():
+    if(request.method == "POST"):
+        id = request.form['_id']
+        baseDatos.Repartidores.delete_one({"_id": id})
+
+        return redirect(url_for('repartidores'))
+
+    return render_template("layouts/repartidores.html")
+
+
+
 # main del programa
 if __name__ == "__main__":
     app.run(debug=True)  # Ejecuta la aplicación
