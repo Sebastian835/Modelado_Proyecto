@@ -98,6 +98,7 @@
                                 <th>id</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
+                                <th>Cedula</th>
                                 <th>Dirección</th>
                                 <th>Número de teléfono</th>
                                 <th>Correo electrónico</th>
@@ -110,6 +111,7 @@
                                 <td>{{ documento._id }}</td>
                                 <td>{{ documento.Nombre }}</td>
                                 <td>{{ documento.Apellido }}</td>
+                                <td>{{ documento.Cedula }}</td>
                                 <td>{{ documento.Direccion }}</td>
                                 <td>{{ documento.NumeroTelefono }}</td>
                                 <td>{{ documento.CorreoElectronico }}</td>
@@ -146,7 +148,7 @@
                         <div class="form-group mb-3">
                             <label for="nombre">Nombre:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre"
-                                value="{{ cliente.Nombre }}" disabled>
+                                value="{{ cliente.Nombre }}">
                         </div>
 
                         <div class="form-group mb-3">
@@ -156,21 +158,27 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label for="nombre">Cedula:</label>
+                            <input type="text" class="form-control" id="cedula" name="cedula"
+                                value="{{ cliente.Cedula }}" disabled>
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label for="nombre">Direccion:</label>
                             <input type="text" class="form-control" id="direccion" name="direccion"
-                                value="{{ cliente.Direccion }}" disabled>
+                                value="{{ cliente.Direccion }}">
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="nombre">Numero Teleforno:</label>
                             <input type="text" class="form-control" id="telefono" name="telefono"
-                                value="{{ cliente.NumeroTelefono }}" disabled>
+                                value="{{ cliente.NumeroTelefono }}">
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="nombre">Correo Electronico:</label>
                             <input type="text" class="form-control" id="correo" name="correo"
-                                value="{{ cliente.CorreoElectronico }}" disabled>
+                                value="{{ cliente.CorreoElectronico }}">
                         </div>
                         {% endfor %}
 
@@ -178,10 +186,9 @@
                     </form>
                 </div>
             </div>
-
         </div>
-
     </div>
+
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
