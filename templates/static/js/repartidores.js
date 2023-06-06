@@ -45,3 +45,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function mostrarOpciones() {
+    var vehiculo = document.getElementById("vehiculo").value;
+    var opcionesDiv = document.getElementById("opciones");
+
+    if (vehiculo !== "") {
+      opcionesDiv.style.display = "block";
+    } else {
+      opcionesDiv.style.display = "none";
+    }
+  }
