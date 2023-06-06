@@ -4,7 +4,6 @@ import pymongo
 from dotenv import load_dotenv
 from pprint import pprint
 
-
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
@@ -27,6 +26,7 @@ def home():
 def clientes():
     clientes_collection = baseDatos["Clientes"]
     resultados = clientes_collection.find()
+
 
     return render_template("layouts/clientes.html", clientes_datos=resultados)
 
@@ -70,6 +70,21 @@ def EliminarCliente():
         return redirect(url_for('clientes'))
 
     return render_template("layouts/clientes.html")
+
+
+@app.route("/UpdateCliente", methods=["GET", "POST"])  
+def UpdateCliente():
+    clientes_collection = baseDatos["Clientes"]
+    resultados = clientes_collection.find()
+
+    if request.method == "POST":
+        id_cliente = request.form["_idCliente"]
+        nombre_cliente = baseDatos.Clientes.find({"_id": id_cliente})
+
+        return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente)
+
+    return render_template("layouts/clientes.html", clientes_datos=resultados)
+
 
 
 

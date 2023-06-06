@@ -7,8 +7,8 @@ function AgregarCliente() {
     }
 }
 
-function EliminarCliente() {
-    var formulario = document.querySelector('.EliminarCliente');
+function UpdateCliente() {
+    var formulario = document.querySelector('.UpdateCliente');
     if (formulario.style.display === 'none') {
         formulario.style.display = 'block';
     } else {

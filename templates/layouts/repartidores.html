@@ -16,24 +16,25 @@
             display: flex;
             justify-content: center;
         }
-    
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
-    
-        th, td {
+
+        th,
+        td {
             padding: 10px;
             border: 1px solid #ccc;
             text-align: left;
         }
-    
+
         thead {
             background-color: #333;
             color: white;
             text-align: center;
         }
-    
+
         .vehiculo {
             display: inline-block;
             padding: 5px 10px;
@@ -69,6 +70,7 @@
             </div>
         </section>
 
+        <!--BODY-->
         <div class="row">
             <table class="table">
                 <thead class="table-dark">
@@ -78,6 +80,7 @@
                         <th>Apellido</th>
                         <th>Número de teléfono</th>
                         <th>Vehiculo</th>
+                        <th>Accion</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,13 +96,19 @@
                                 {{ documento.Vehiculo.Tipo }}
                             </span>
                         </td>
+                        <td>
+                            <form action="/EliminarRepartidor" method="post">
+                                <input type="hidden" name="_id" value="{{documento._id}}">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
 
-        <!--BODY-->
+
         <div class="col-2">
             <button onclick="AgregarRepartidor()" type="button" class="btn btn-info">Ingresar Repartidor</button>
             <form class="AgregarRepartidor" action="/RegistroRepartidor" method="post" style="display: none;">
@@ -140,19 +149,9 @@
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
         </div>
-        <div class="col-2">
-            <button onclick="EliminarRepartidor()" type="button" class="btn btn-danger">Eliminar Repartidor</button>
-            <form class="EliminarRepartidor" action="/EliminarRepartidor" method="post" style="display: none;">
-                <div class="form-group mb-3">
-                    <label for="nombre">Id del Repartidor:</label>
-                    <input type="text" class="form-control input-sm" id="_id" name="_id" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Eliminar</button>
-            </form>
-        </div>
 
     </div>
-    </div>
+
 
 </body>
 
