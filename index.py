@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 import os
 import pymongo
 from dotenv import load_dotenv
-from pprint import pprint
+from datetime import datetime
+
 
 load_dotenv()
 
@@ -27,13 +28,39 @@ def clientes():
     clientes_collection = baseDatos["Clientes"]
     resultados = clientes_collection.find()
 
+    pedidos_collection = baseDatos["Pedidos"]
+    resultadosPedidos = pedidos_collection.find()
+
+    nombres_clientes = []  # Lista para almacenar los nombres de los clientes referenciados
+    nombres_clientes.clear()
+    fechas_clientes = []  # Lista para almacenar los nombres de los clientes referenciados
+    fechas_clientes.clear()
+    for pedido in resultadosPedidos:
+    
+        cliente_referenciado = clientes_collection.database.dereference(pedido["IDCliente"])
+        if cliente_referenciado:
+            nombre_cliente = cliente_referenciado["Nombre"]
+            nombres_clientes.append(nombre_cliente)  
+
+             # Formatear la fecha y hora del pedido
+            fecha_hora_pedido = pedido["FechaHoraPedido"]
+            fecha_hora_formateada = datetime.strptime(fecha_hora_pedido, "%Y-%m-%dT%H:%M:%SZ")
+            fechaPedido= fecha_hora_formateada.strftime("%H:%M - %d/%m/%Y")
+            fechas_clientes.append(fechaPedido)  
+
+            resultadosPedidos = pedidos_collection.find()
+
+
     if request.method == "POST":
         id_cliente = request.form["_idCliente"]
         nombre_cliente = baseDatos.Clientes.find({"_id": id_cliente})
 
-        return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente)
+        return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente, pedidos_datos= resultadosPedidos)
 
-    return render_template("layouts/clientes.html", clientes_datos=resultados)
+
+    return render_template("layouts/clientes.html", clientes_datos=resultados, pedidos_datos= resultadosPedidos, 
+                           nombres_clientes=nombres_clientes, fecha_clientesP=fechas_clientes)
+
 
 @app.route("/RegistroCliente", methods=["GET", "POST"])  
 def RegistroCliente():

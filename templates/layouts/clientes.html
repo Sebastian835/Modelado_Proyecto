@@ -100,7 +100,8 @@
                             <div class="d-grid gap-2">
                                 <label>Ingrese ID del cliente:</label>
                                 <input type="text" class="form-control" id="_idCliente" name="_idCliente">
-                                <button onclick="UpdateCliente()" type="submit" class="btn btn-info" style="margin-bottom: 3%;">Buscar</button>
+                                <button onclick="UpdateCliente()" type="submit" class="btn btn-info"
+                                    style="margin-bottom: 3%;">Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -185,7 +186,84 @@
                 </tbody>
             </table>
         </div>
-    </div>
+
+
+        <div class="row">
+
+            <div class="col-12 col-md-6">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="d-grid gap-2">
+                            <button onclick="AgregarPedido()" type="button" class="btn btn-info">Ingresar
+                                Pedido</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <form class="AgregarPedido" action="#" method="post" style="display: none;">
+                        <div class="form-group mb-3" style="margin-top: 2%;">
+                            <label for="cliente">Cliente:</label>
+                            <input type="text" class="form-control" id="cliente" name="cliente" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="fecha">Fecha:</label>
+                            <input type="text" class="form-control" id="fecha" name="fecha" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="destino">Destino:</label>
+                            <input type="text" class="form-control" id="destino" name="destino" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="descripcion">Descripcion:</label>
+                            <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary" style="margin-bottom: 3%;">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>id</th>
+                            <th>Datos Cliente</th>
+                            <th>Fehca y Hora del Pedido</th>
+                            <th>Destino</th>
+                            <th>Descripcion</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for documentoPedido in pedidos_datos %}
+                        <tr>
+                            <td>{{ documentoPedido._id }}</td>
+                            <td>
+                                ({{ documentoPedido.IDCliente.id}}){% if loop.index - 1 < nombres_clientes|length %} {{
+                                    nombres_clientes[loop.index - 1] }}{% endif %} </td>
+                            <td>
+                                {% if loop.index - 1 < fecha_clientesP|length %} {{ fecha_clientesP[loop.index - 1] }}{%
+                                    endif %} </td>
+                            <td>{{ documentoPedido.DireccionDestino }}</td>
+                            <td>{{ documentoPedido.DescripcionPaquete }}</td>
+                            <td>
+                                <form action="#" method="post">
+                                    <input type="hidden" name="_id" value="{{documentoPedido._id}}">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 </body>
 

@@ -16,5 +16,15 @@ function UpdateCliente() {
     }
 }
 
+function AgregarPedido() {
+    var formulario = document.querySelector('.AgregarPedido');
+    if (formulario.style.display === 'none') {
+        formulario.style.display = 'block';
+    } else {
+        formulario.style.display = 'none';
+    }
+}
+
+
 
 
