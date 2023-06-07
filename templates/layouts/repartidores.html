@@ -39,6 +39,134 @@
 
         <!--BODY-->
         <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="d-grid gap-2">
+                            <button onclick="AgregarRepartidor()" type="button" class="btn btn-info">Ingresar Repartidor</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <form class="AgregarRepartidor" action="/RegistroRepartidor" method="post" style="display: none;">
+                        <div class="form-group mb-3" style="margin-top: 2%;">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control input-sm" id="nombre" name="nombre" required>
+                        </div>
+        
+                        <div class="form-group mb-3">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" class="form-control input-sm" id="apellido" name="apellido" required>
+                        </div>
+        
+                        <div class="form-group mb-3">
+                            <label for="cedula">Cedula:</label>
+                            <input type="text" class="form-control input-sm" id="cedula" name="cedula" required>
+                        </div>
+        
+                        <div class="form-group mb-3">
+                            <label for="telefono">Número de teléfono:</label>
+                            <input type="number" class="form-control input-sm" id="telefono" name="telefono" required>
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="vehiculo">Tipo de vehículo</label>
+                            <select class="form-control" id="vehiculo" name="vehiculo" onchange="mostrarOpciones()">
+                                <option value="" disabled selected hidden>Seleccionar...</option>
+                                <option value="Automóvil">Automóvil</option>
+                                <option value="Moto">Moto</option>
+                            </select>
+                        </div>
+                        <div id="opciones" style="display: none;">
+                            <div class="form-group">
+                                <label for="marca">Placa</label>
+                                <input type="text" class="form-control" id="placa" name="placa">
+                            </div>
+                            <div class="form-group">
+                                <label for="modelo">Modelo</label>
+                                <input type="text" class="form-control" id="modelo" name="modelo">
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <form class="UpdateRepartidores" action="/repartidores" method="post">
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="d-grid gap-2" style="margin-bottom: 2%;">
+                                <label>Ingrese ID del repartidores:</label>
+                                <input type="text" class="form-control" id="_idRepartidor" name="_idRepartidor">
+                                <button onclick="UpdateRepartidores()" type="submit" class="btn btn-info">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+        
+                <form action="/UpdateRepartidores" method="post">
+                    {% for repartidor in DatoRepartidor %}
+                    <div class="form-group mb-3" style="margin-top: 2%;">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ repartidor.Nombre }}">
+                    </div>
+        
+                    <div class="form-group mb-3">
+                        <label for="nombre">Apellido:</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido"
+                            value="{{ repartidor.Apellido }}" readonly>
+                    </div>
+        
+                    <div class="form-group mb-3">
+                        <label for="nombre">Cedula:</label>
+                        <input type="text" class="form-control" id="cedula" name="cedula" value="{{ repartidor.Cedula }}"
+                            readonly>
+                    </div>
+        
+                    <div class="form-group mb-3">
+                        <label for="nombre">Telefono:</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono"
+                            value="{{ repartidor.NumeroTelefono }}">
+                    </div>
+        
+                    <div class="form-group mb-3">
+                        <label for="tipo">Tipo:</label>
+                        <select class="form-control" id="vehiculo" name="vehiculo" onchange="toggleReadOnly(this)">
+                            {% if repartidor.Vehiculo.Tipo == "Automóvil" %}
+                            <option value="Automóvil" selected>Automóvil</option>
+                            <option value="Moto">Moto</option>
+                            {% elif repartidor.Vehiculo.Tipo == "Moto" %}
+                            <option value="Moto" selected>Moto</option>
+                            <option value="Automóvil">Automóvil</option>
+                            {% endif %}
+                        </select>
+                    </div>
+        
+                    <div class="form-group mb-3 row">
+                        <label for="placa" class="col-sm-3 col-form-label">Placa:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="placa" name="placa"
+                                value="{{ repartidor.Vehiculo.Placa }}">
+                        </div>
+                    </div>
+        
+                    <div class="form-group mb-3 row">
+                        <label for="modelo" class="col-sm-3 col-form-label">Modelo:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="modelo" name="modelo"
+                                value="{{ repartidor.Vehiculo.Modelo }}">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;">Actualizar</button>
+                    {%endfor%}
+                </form>
+            </div>
+        </div>        
+
+        <!--Tabla-->
+        <div class="row">
             <table class="table">
                 <thead class="table-dark">
                     <tr>
@@ -75,125 +203,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-
-
-        <div class="col-2">
-            <button onclick="AgregarRepartidor()" type="button" class="btn btn-info">Ingresar Repartidor</button>
-            <form class="AgregarRepartidor" action="/RegistroRepartidor" method="post" style="display: none;">
-                <div class="form-group mb-3">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" class="form-control input-sm" id="nombre" name="nombre" required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="apellido">Apellido:</label>
-                    <input type="text" class="form-control input-sm" id="apellido" name="apellido" required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="cedula">Cedula:</label>
-                    <input type="text" class="form-control input-sm" id="cedula" name="cedula" required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="telefono">Número de teléfono:</label>
-                    <input type="number" class="form-control input-sm" id="telefono" name="telefono" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="vehiculo">Tipo de vehículo</label>
-                    <select class="form-control" id="vehiculo" name="vehiculo" onchange="mostrarOpciones()">
-                        <option value="" disabled selected hidden>Seleccionar...</option>
-                        <option value="Automóvil">Automóvil</option>
-                        <option value="Moto">Moto</option>
-                    </select>
-                </div>
-                <div id="opciones" style="display: none;">
-                    <div class="form-group">
-                        <label for="marca">Placa</label>
-                        <input type="text" class="form-control" id="placa" name="placa">
-                    </div>
-                    <div class="form-group">
-                        <label for="modelo">Modelo</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo">
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </form>
-        </div>
-
-
-        <div class="col-4">
-            <form class="UpdateRepartidores" action="/repartidores" method="post">
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <div class="d-grid gap-2">
-                            <label>Ingrese ID del repartidores:</label>
-                            <input type="text" class="form-control" id="_idRepartidor" name="_idRepartidor">
-                            <button onclick="UpdateRepartidores()" type="submit" class="btn btn-info">Buscar</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <form action="/UpdateRepartidores" method="post">
-                {% for repartidor in DatoRepartidor %}
-                <div class="form-group mb-3">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ repartidor.Nombre }}">
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="nombre">Apellido:</label>
-                    <input type="text" class="form-control" id="apellido" name="apellido"
-                        value="{{ repartidor.Apellido }}" readonly>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="nombre">Cedula:</label>
-                    <input type="text" class="form-control" id="cedula" name="cedula" value="{{ repartidor.Cedula }}"
-                        readonly>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="nombre">Telefono:</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono"
-                        value="{{ repartidor.NumeroTelefono }}">
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="tipo">Tipo:</label>
-                    <select class="form-control" id="vehiculo" name="vehiculo" onchange="toggleReadOnly(this)">
-                        {% if repartidor.Vehiculo.Tipo == "Automóvil" %}
-                        <option value="Automóvil" selected>Automóvil</option>
-                        <option value="Moto">Moto</option>
-                        {% elif repartidor.Vehiculo.Tipo == "Moto" %}
-                        <option value="Moto" selected>Moto</option>
-                        <option value="Automóvil">Automóvil</option>
-                        {% endif %}
-                    </select>
-                </div>
-
-                <div class="form-group mb-3 row">
-                    <label for="placa" class="col-sm-3 col-form-label">Placa:</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="placa" name="placa"
-                            value="{{ repartidor.Vehiculo.Placa }}">
-                    </div>
-                </div>
-
-                <div class="form-group mb-3 row">
-                    <label for="modelo" class="col-sm-3 col-form-label">Modelo:</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="modelo" name="modelo"
-                            value="{{ repartidor.Vehiculo.Modelo }}">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Actualizar</button>
-                {%endfor%}
-            </form>
         </div>
     </div>
 
