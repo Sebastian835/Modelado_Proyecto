@@ -27,6 +27,11 @@ def clientes():
     clientes_collection = baseDatos["Clientes"]
     resultados = clientes_collection.find()
 
+    if request.method == "POST":
+        id_cliente = request.form["_idCliente"]
+        nombre_cliente = baseDatos.Clientes.find({"_id": id_cliente})
+
+        return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente)
 
     return render_template("layouts/clientes.html", clientes_datos=resultados)
 
@@ -78,14 +83,17 @@ def UpdateCliente():
     clientes_collection = baseDatos["Clientes"]
     resultados = clientes_collection.find()
 
-    if request.method == "POST":
-        id_cliente = request.form["_idCliente"]
-        nombre_cliente = baseDatos.Clientes.find({"_id": id_cliente})
-
-        return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente)
+    if(request.method == "POST"):
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        cedula = request.form['cedula']
+        direccion = request.form['direccion']
+        telefono = request.form['telefono']
+        correo = request.form['correo']
+        
+        baseDatos["Clientes"].update_one({"Cedula": cedula}, {"$set": {"Nombre": nombre, "Apellido": apellido, "Direccion":direccion, "NumeroTelefono": telefono, "CorreoElectronico":correo, "Cedula": cedula}})
 
     return render_template("layouts/clientes.html", clientes_datos=resultados)
-
 
 
 
@@ -154,7 +162,6 @@ def EliminarRepartidor():
 def UpdateRepartidores():
     repartidores_collection = baseDatos["Repartidores"]
     resultados = repartidores_collection.find()
-
 
     if(request.method == "POST"):
         nombre = request.form['nombre']

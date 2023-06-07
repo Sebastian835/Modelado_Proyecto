@@ -50,7 +50,8 @@
                 <div class="row mt-3">
                     <div class="col-12">
                         <div class="d-grid gap-2">
-                            <button onclick="AgregarCliente()" type="button" class="btn btn-info">Ingresar Cliente</button>
+                            <button onclick="AgregarCliente()" type="button" class="btn btn-info">Ingresar
+                                Cliente</button>
                         </div>
                     </div>
                 </div>
@@ -60,32 +61,32 @@
                             <label for="nombre">Nombre:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
-        
+
                         <div class="form-group mb-3">
                             <label for="apellido">Apellido:</label>
                             <input type="text" class="form-control" id="apellido" name="apellido" required>
                         </div>
-        
+
                         <div class="form-group mb-3">
                             <label for="cedula">Cedula:</label>
                             <input type="text" class="form-control" id="cedula" name="cedula" required>
                         </div>
-        
+
                         <div class="form-group mb-3">
                             <label for="direccion">Dirección:</label>
                             <input type="text" class="form-control" id="direccion" name="direccion" required>
                         </div>
-        
+
                         <div class="form-group mb-3">
                             <label for="telefono">Número de teléfono:</label>
                             <input type="number" class="form-control" id="telefono" name="telefono" required>
                         </div>
-        
+
                         <div class="form-group mb-3">
                             <label for="correo">Correo electrónico:</label>
                             <input type="email" class="form-control" id="correo" name="correo" required>
                         </div>
-        
+
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary" style="margin-bottom: 3%;">Guardar</button>
                         </div>
@@ -93,92 +94,96 @@
                 </div>
             </div>
             <div class="col-12 col-md-6">
-                <form class="UpdateCliente" action="/UpdateCliente" method="post">
+                <form class="UpdateCliente" action="/clientes" method="post">
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="d-grid gap-2">
                                 <label>Ingrese ID del cliente:</label>
-                                <input type="text" class="form-control" id="_idCliente" name="_idCliente" required>
+                                <input type="text" class="form-control" id="_idCliente" name="_idCliente">
                                 <button onclick="UpdateCliente()" type="submit" class="btn btn-info">Buscar</button>
                             </div>
                         </div>
                     </div>
+                </form>
+
+                <form action="/UpdateCliente" method="post">
                     {% for cliente in DatoCliente %}
                     <div class="form-group mb-3">
                         <label for="nombre">Nombre:</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" value="{{ cliente.Nombre }}">
                     </div>
-        
+
                     <div class="form-group mb-3">
                         <label for="nombre">Apellido:</label>
                         <input type="text" class="form-control" id="apellido" name="apellido"
-                            value="{{ cliente.Apellido }}" disabled>
+                            value="{{ cliente.Apellido }}" readonly>
                     </div>
-        
+
                     <div class="form-group mb-3">
                         <label for="nombre">Cedula:</label>
                         <input type="text" class="form-control" id="cedula" name="cedula" value="{{ cliente.Cedula }}"
-                            disabled>
+                            readonly>
                     </div>
-        
+
                     <div class="form-group mb-3">
                         <label for="nombre">Direccion:</label>
                         <input type="text" class="form-control" id="direccion" name="direccion"
                             value="{{ cliente.Direccion }}">
                     </div>
-        
+
                     <div class="form-group mb-3">
-                        <label for="nombre">Numero Teleforno:</label>
+                        <label for="nombre">Numero Telefono:</label>
                         <input type="text" class="form-control" id="telefono" name="telefono"
                             value="{{ cliente.NumeroTelefono }}">
                     </div>
-        
+
                     <div class="form-group mb-3">
                         <label for="nombre">Correo Electronico:</label>
                         <input type="text" class="form-control" id="correo" name="correo"
                             value="{{ cliente.CorreoElectronico }}">
                     </div>
                     {% endfor %}
-                    <button type="submit" class="btn btn-primary" style="margin-top: 2%; margin-bottom: 3%;">Actualizar</button>
+                    <button type="submit" class="btn btn-primary"
+                        style="margin-top: 2%; margin-bottom: 3%;">Actualizar</button>
                 </form>
             </div>
-        </div>               
+        </div>
 
         <div class="row">
             <table class="table">
                 <thead class="table-dark">
-                            <tr>
-                                <th>id</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Cedula</th>
-                                <th>Dirección</th>
-                                <th>Número de teléfono</th>
-                                <th>Correo electrónico</th>
-                                <th>Accion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for documento in clientes_datos %}
-                            <tr>
-                                <td>{{ documento._id }}</td>
-                                <td>{{ documento.Nombre }}</td>
-                                <td>{{ documento.Apellido }}</td>
-                                <td>{{ documento.Cedula }}</td>
-                                <td>{{ documento.Direccion }}</td>
-                                <td>{{ documento.NumeroTelefono }}</td>
-                                <td>{{ documento.CorreoElectronico }}</td>
-                                <td>
-                                    <form action="/EliminarCliente" method="post">
-                                        <input type="hidden" name="_id" value="{{documento._id}}">
-                                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cedula</th>
+                        <th>Dirección</th>
+                        <th>Número de teléfono</th>
+                        <th>Correo electrónico</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for documento in clientes_datos %}
+                    <tr>
+                        <td>{{ documento._id }}</td>
+                        <td>{{ documento.Nombre }}</td>
+                        <td>{{ documento.Apellido }}</td>
+                        <td>{{ documento.Cedula }}</td>
+                        <td>{{ documento.Direccion }}</td>
+                        <td>{{ documento.NumeroTelefono }}</td>
+                        <td>{{ documento.CorreoElectronico }}</td>
+                        <td>
+                            <form action="/EliminarCliente" method="post">
+                                <input type="hidden" name="_id" value="{{documento._id}}">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </body>
