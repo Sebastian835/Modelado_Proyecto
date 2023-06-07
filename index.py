@@ -94,7 +94,7 @@ def UpdateCliente():
 def repartidores():
     repartidores_collection = baseDatos["Repartidores"]
     resultados = repartidores_collection.find()
-
+    
     if request.method == "POST":
         id_repartidor = request.form["_idRepartidor"]
         nombre_repartidor = baseDatos.Repartidores.find({"_id": id_repartidor})
@@ -154,6 +154,14 @@ def EliminarRepartidor():
 def UpdateRepartidores():
     repartidores_collection = baseDatos["Repartidores"]
     resultados = repartidores_collection.find()
+    print("ENTRÓ")
+    if(request.method == "POST"):
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        cedula = request.form['cedula']
+        print(nombre)
+
+        #baseDatos["Clientes"].update_one({"Cedula": cedula}, {"$set": {"Nombre": nombre, "Apellido": apellido}})
 
 
     return render_template("layouts/repartidores.html", repartidores_datos=resultados)
