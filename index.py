@@ -27,16 +27,16 @@ def home():
 def clientes():
     clientes_collection = baseDatos["Clientes"]
     resultados = clientes_collection.find()
-
+    
     pedidos_collection = baseDatos["Pedidos"]
     resultadosPedidos = pedidos_collection.find()
 
-    nombres_clientes = []  # Lista para almacenar los nombres de los clientes referenciados
+
+    nombres_clientes = []  
     nombres_clientes.clear()
-    fechas_clientes = []  # Lista para almacenar los nombres de los clientes referenciados
+    fechas_clientes = []  
     fechas_clientes.clear()
     for pedido in resultadosPedidos:
-    
         cliente_referenciado = clientes_collection.database.dereference(pedido["IDCliente"])
         if cliente_referenciado:
             nombre_cliente = cliente_referenciado["Nombre"]
@@ -50,17 +50,14 @@ def clientes():
 
             resultadosPedidos = pedidos_collection.find()
 
-
     if request.method == "POST":
         id_cliente = request.form["_idCliente"]
         nombre_cliente = baseDatos.Clientes.find({"_id": id_cliente})
 
         return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente, pedidos_datos= resultadosPedidos)
 
-
-    return render_template("layouts/clientes.html", clientes_datos=resultados, pedidos_datos= resultadosPedidos, 
+    return render_template("layouts/clientes.html",  clientes_datos=resultados, pedidos_datos= resultadosPedidos, 
                            nombres_clientes=nombres_clientes, fecha_clientesP=fechas_clientes)
-
 
 @app.route("/RegistroCliente", methods=["GET", "POST"])  
 def RegistroCliente():
@@ -205,6 +202,54 @@ def UpdateRepartidores():
 
 
     return render_template("layouts/repartidores.html", repartidores_datos=resultados)
+
+
+
+#--PEDIDOS--
+@app.route("/NuevoPedido", methods=["GET", "POST"])  
+def NuevoPedido():
+    if(request.method == "POST"):
+        ultimo_documento = baseDatos.Pedidos.find_one({}, sort=[('_id', -1)])
+        print(ultimo_documento)
+
+        if ultimo_documento is not None:
+            ultimo_id = int(ultimo_documento['_id'])
+            nuevo_id = ultimo_id + 1
+        else:
+            nuevo_id = 1
+        nuevo_id_str = str(nuevo_id).zfill(3)
+
+        referencia = request.form['referencia']
+        fecha_hora =  request.form['fecha_hora']
+        fecha_hora=fecha_hora+"00Z"
+        destino =  request.form['destino']
+        descripcion =  request.form['descripcion']
+        
+        
+        pedido = {
+            "_id": nuevo_id_str,
+            "IDCliente": pymongo.DBRef('Clientes', referencia),
+            "FechaHoraPedido": fecha_hora,
+            "DireccionDestino" : destino,
+            "DescripcionPaquete" : descripcion
+        }
+
+        baseDatos.Pedidos.insert_one(pedido)
+        return redirect(url_for('clientes'))
+
+    return render_template("layouts/clientes.html")
+
+@app.route("/EliminarPedido", methods=["GET", "POST"])  
+def EliminarPedido():
+    if(request.method == "POST"):
+        id = request.form['_id']
+        baseDatos.Pedidos.delete_one({"_id": id})
+
+        return redirect(url_for('clientes'))
+
+    return render_template("layouts/clientes.html")
+
+
 
 
 # main del programa
