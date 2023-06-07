@@ -13,3 +13,26 @@ table {
 .formulario2 {
   flex-grow: 1;
 }
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+thead {
+  background-color: #333;
+  color: white;
+  text-align: center;
+}

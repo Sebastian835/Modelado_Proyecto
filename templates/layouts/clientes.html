@@ -46,59 +46,107 @@
 
         <!--BODY-->
         <div class="row">
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="d-grid gap-2">
-                        <button onclick="AgregarCliente()" type="button" class="btn btn-info">Ingresar Cliente</button>
+            <div class="col-12 col-md-6">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="d-grid gap-2">
+                            <button onclick="AgregarCliente()" type="button" class="btn btn-info">Ingresar Cliente</button>
+                        </div>
                     </div>
                 </div>
+                <div class="col-12">
+                    <form class="AgregarCliente" action="/RegistroCliente" method="post" style="display: none;">
+                        <div class="form-group mb-3" style="margin-top: 2%;">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+        
+                        <div class="form-group mb-3">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" required>
+                        </div>
+        
+                        <div class="form-group mb-3">
+                            <label for="cedula">Cedula:</label>
+                            <input type="text" class="form-control" id="cedula" name="cedula" required>
+                        </div>
+        
+                        <div class="form-group mb-3">
+                            <label for="direccion">Dirección:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required>
+                        </div>
+        
+                        <div class="form-group mb-3">
+                            <label for="telefono">Número de teléfono:</label>
+                            <input type="number" class="form-control" id="telefono" name="telefono" required>
+                        </div>
+        
+                        <div class="form-group mb-3">
+                            <label for="correo">Correo electrónico:</label>
+                            <input type="email" class="form-control" id="correo" name="correo" required>
+                        </div>
+        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="col-12">
-                <form class="AgregarCliente" action="/RegistroCliente" method="post" style="display: none;">
+            <div class="col-12 col-md-6">
+                <form class="UpdateCliente" action="/UpdateCliente" method="post">
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="d-grid gap-2">
+                                <label>Ingrese ID del cliente:</label>
+                                <input type="text" class="form-control" id="_idCliente" name="_idCliente" required>
+                                <button onclick="UpdateCliente()" type="submit" class="btn btn-info">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% for cliente in DatoCliente %}
                     <div class="form-group mb-3">
                         <label for="nombre">Nombre:</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ cliente.Nombre }}">
                     </div>
-
+        
                     <div class="form-group mb-3">
-                        <label for="apellido">Apellido:</label>
-                        <input type="text" class="form-control" id="apellido" name="apellido" required>
+                        <label for="nombre">Apellido:</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido"
+                            value="{{ cliente.Apellido }}" disabled>
                     </div>
-
+        
                     <div class="form-group mb-3">
-                        <label for="cedula">Cedula:</label>
-                        <input type="text" class="form-control" id="cedula" name="cedula" required>
+                        <label for="nombre">Cedula:</label>
+                        <input type="text" class="form-control" id="cedula" name="cedula" value="{{ cliente.Cedula }}"
+                            disabled>
                     </div>
-
+        
                     <div class="form-group mb-3">
-                        <label for="direccion">Dirección:</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" required>
+                        <label for="nombre">Direccion:</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion"
+                            value="{{ cliente.Direccion }}">
                     </div>
-
+        
                     <div class="form-group mb-3">
-                        <label for="telefono">Número de teléfono:</label>
-                        <input type="number" class="form-control" id="telefono" name="telefono" required>
+                        <label for="nombre">Numero Teleforno:</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono"
+                            value="{{ cliente.NumeroTelefono }}">
                     </div>
-
+        
                     <div class="form-group mb-3">
-                        <label for="correo">Correo electrónico:</label>
-                        <input type="email" class="form-control" id="correo" name="correo" required>
+                        <label for="nombre">Correo Electronico:</label>
+                        <input type="text" class="form-control" id="correo" name="correo"
+                            value="{{ cliente.CorreoElectronico }}">
                     </div>
-
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary" style="margin-top: 2%; margin-bottom: 2%;">Actualizar</button>
                 </form>
             </div>
-        </div>
-        <br>
-
+        </div>               
 
         <div class="row">
-            <div class="row justify-content-center">
-                <div class="col-10">
-                    <table class="table table-bordered">
-                        <thead>
+            <table class="table">
+                <thead class="table-dark">
                             <tr>
                                 <th>id</th>
                                 <th>Nombre</th>
@@ -131,67 +179,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-
-                <div class="col-4">
-                    <form class="UpdateCliente" action="/UpdateCliente" method="post">
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="d-grid gap-2">
-                                    <label>Ingrese ID del cliente:</label>
-                                    <input type="text" class="form-control" id="_idCliente" name="_idCliente" required>
-                                    <button onclick="UpdateCliente()" type="submit" class="btn btn-info">Buscar</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        {% for cliente in DatoCliente %}
-                        <div class="form-group mb-3">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre"
-                                value="{{ cliente.Nombre }}">
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="nombre">Apellido:</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido"
-                                value="{{ cliente.Apellido }}" disabled>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="nombre">Cedula:</label>
-                            <input type="text" class="form-control" id="cedula" name="cedula"
-                                value="{{ cliente.Cedula }}" disabled>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="nombre">Direccion:</label>
-                            <input type="text" class="form-control" id="direccion" name="direccion"
-                                value="{{ cliente.Direccion }}">
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="nombre">Numero Teleforno:</label>
-                            <input type="text" class="form-control" id="telefono" name="telefono"
-                                value="{{ cliente.NumeroTelefono }}">
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="nombre">Correo Electronico:</label>
-                            <input type="text" class="form-control" id="correo" name="correo"
-                                value="{{ cliente.CorreoElectronico }}">
-                        </div>
-                        {% endfor %}
-
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 
 </body>

@@ -1,8 +1,31 @@
-table {
-  border-collapse: separate;
-  border-spacing: 15px;
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+thead {
+  background-color: #333;
+  color: white;
+  text-align: center;
 }
 
 .vehiculo {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 3px;
   cursor: pointer;
 }
