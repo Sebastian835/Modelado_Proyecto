@@ -221,14 +221,17 @@ def NuevoPedido():
 
         referencia = request.form['referencia']
         fecha_hora =  request.form['fecha_hora']
-        fecha_hora=fecha_hora+"00Z"
+        fecha_hora=fecha_hora+":00Z"
         destino =  request.form['destino']
         descripcion =  request.form['descripcion']
         
         
         pedido = {
             "_id": nuevo_id_str,
-            "IDCliente": pymongo.DBRef('Clientes', referencia),
+            "IDCliente": {
+                "$ref": "Clientes",
+                "$id": referencia
+            },
             "FechaHoraPedido": fecha_hora,
             "DireccionDestino" : destino,
             "DescripcionPaquete" : descripcion
