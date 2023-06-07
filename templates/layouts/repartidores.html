@@ -166,12 +166,12 @@
                 <div class="form-group mb-3">
                     <label for="tipo">Tipo:</label>
                     <select class="form-control" id="vehiculo" name="vehiculo" onchange="toggleReadOnly(this)">
-                        {% if repartidor.Vehiculo.Tipo == "Automóvil" %}
-                        <option value="Automóvil" selected>Automóvil</option>
+                        {% if repartidor.Vehiculo.Tipo == "Automovil" %}
+                        <option value="Automóvil" selected>Automovil</option>
                         <option value="Moto">Moto</option>
                         {% elif repartidor.Vehiculo.Tipo == "Moto" %}
                         <option value="Moto" selected>Moto</option>
-                        <option value="Automóvil">Vehículo</option>
+                        <option value="Automóvil">Automovil</option>
                         {% endif %}
                     </select>
                 </div>
