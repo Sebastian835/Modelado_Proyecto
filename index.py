@@ -73,7 +73,6 @@ def EliminarCliente():
 
     return render_template("layouts/clientes.html")
 
-
 @app.route("/UpdateCliente", methods=["GET", "POST"])  
 def UpdateCliente():
     clientes_collection = baseDatos["Clientes"]
@@ -95,6 +94,12 @@ def UpdateCliente():
 def repartidores():
     repartidores_collection = baseDatos["Repartidores"]
     resultados = repartidores_collection.find()
+
+    if request.method == "POST":
+        id_repartidor = request.form["_idRepartidor"]
+        nombre_repartidor = baseDatos.Repartidores.find({"_id": id_repartidor})
+
+        return render_template("layouts/repartidores.html", repartidores_datos=resultados, DatoRepartidor=nombre_repartidor)
 
     return render_template("layouts/repartidores.html", repartidores_datos=resultados)
 
@@ -145,6 +150,13 @@ def EliminarRepartidor():
 
     return render_template("layouts/repartidores.html")
 
+@app.route("/UpdateRepartidores", methods=["GET", "POST"])  
+def UpdateRepartidores():
+    repartidores_collection = baseDatos["Repartidores"]
+    resultados = repartidores_collection.find()
+
+
+    return render_template("layouts/repartidores.html", repartidores_datos=resultados)
 
 
 # main del programa

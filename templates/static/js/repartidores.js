@@ -7,6 +7,15 @@ function AgregarRepartidor() {
     }
 }
 
+function UpdateRepartidores() {
+    var formulario = document.querySelector('.UpdateRepartidores');
+
+    if (formulario.style.display === 'none') {
+        formulario.style.display = 'block'; 
+    } else {
+        formulario.style.display = 'none'; 
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     var vehiculos = document.getElementsByClassName('vehiculo');
@@ -56,4 +65,4 @@ function mostrarOpciones() {
     } else {
       opcionesDiv.style.display = "none";
     }
-  }
+}
