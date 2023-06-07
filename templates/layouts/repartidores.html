@@ -148,15 +148,50 @@
                 <div class="form-group mb-3">
                     <label for="nombre">Apellido:</label>
                     <input type="text" class="form-control" id="apellido" name="apellido"
-                        value="{{ repartidor.Apellido }}">
+                        value="{{ repartidor.Apellido }}" readonly>
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="nombre">Cedula:</label>
-                    <input type="text" class="form-control" id="cedula" name="cedula" value="{{ repartidor.Cedula }}">
+                    <input type="text" class="form-control" id="cedula" name="cedula" value="{{ repartidor.Cedula }}"
+                        readonly>
                 </div>
-                {% endfor %}
 
+                <div class="form-group mb-3">
+                    <label for="nombre">Telefono:</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono"
+                        value="{{ repartidor.NumeroTelefono }}">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="tipo">Tipo:</label>
+                    <select class="form-control" id="vehiculo" name="vehiculo" onchange="toggleReadOnly(this)">
+                        {% if repartidor.Vehiculo.Tipo == "Automóvil" %}
+                        <option value="Automóvil" selected>Automóvil</option>
+                        <option value="Moto">Moto</option>
+                        {% elif repartidor.Vehiculo.Tipo == "Moto" %}
+                        <option value="Moto" selected>Moto</option>
+                        <option value="Automóvil">Vehículo</option>
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="form-group mb-3 row">
+                    <label for="placa" class="col-sm-3 col-form-label">Placa:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="placa" name="placa"
+                            value="{{ repartidor.Vehiculo.Placa }}">
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 row">
+                    <label for="modelo" class="col-sm-3 col-form-label">Modelo:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="modelo" name="modelo"
+                            value="{{ repartidor.Vehiculo.Modelo }}">
+                    </div>
+                </div>
+                {%endfor%}
                 <button type="submit" class="btn btn-primary">Actualizar</button>
             </form>
         </div>
