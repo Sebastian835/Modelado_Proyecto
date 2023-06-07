@@ -105,7 +105,7 @@
                     <label for="vehiculo">Tipo de vehículo</label>
                     <select class="form-control" id="vehiculo" name="vehiculo" onchange="mostrarOpciones()">
                         <option value="" disabled selected hidden>Seleccionar...</option>
-                        <option value="Automovil">Automóvil</option>
+                        <option value="Automóvil">Automóvil</option>
                         <option value="Moto">Moto</option>
                     </select>
                 </div>
@@ -166,12 +166,12 @@
                 <div class="form-group mb-3">
                     <label for="tipo">Tipo:</label>
                     <select class="form-control" id="vehiculo" name="vehiculo" onchange="toggleReadOnly(this)">
-                        {% if repartidor.Vehiculo.Tipo == "Automovil" %}
-                        <option value="Automóvil" selected>Automovil</option>
+                        {% if repartidor.Vehiculo.Tipo == "Automóvil" %}
+                        <option value="Automóvil" selected>Automóvil</option>
                         <option value="Moto">Moto</option>
                         {% elif repartidor.Vehiculo.Tipo == "Moto" %}
                         <option value="Moto" selected>Moto</option>
-                        <option value="Automóvil">Automovil</option>
+                        <option value="Automóvil">Automóvil</option>
                         {% endif %}
                     </select>
                 </div>
@@ -191,8 +191,8 @@
                             value="{{ repartidor.Vehiculo.Modelo }}">
                     </div>
                 </div>
-                {%endfor%}
                 <button type="submit" class="btn btn-primary">Actualizar</button>
+                {%endfor%}
             </form>
         </div>
     </div>
