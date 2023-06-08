@@ -7,16 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
   var container = document.createElement("div");
   container.className = "container bg-success";
 
-  var brand = document.createElement("a");
-  brand.className = "navbar-brand";
-  brand.href = "#";
-
   var logo = document.createElement("img");
-  logo.src = "https://www.servientrega.com.ec/images/logo.png";
+  logo.src = "{{ url_for('static', filename='img/logo.jpg') }}";
   logo.alt = "";
   logo.width = "100px";
 
-  brand.appendChild(logo);
+  container.appendChild(logo);
 
   var collapse = document.createElement("div");
   collapse.className = "collapse navbar-collapse justify-content-end";
@@ -49,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   collapse.appendChild(ul);
-  container.appendChild(brand);
   container.appendChild(collapse);
   navbar.appendChild(container);
 
