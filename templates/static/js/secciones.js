@@ -8,9 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
   container.className = "container bg-success";
 
   var logo = document.createElement("img");
-  logo.src = "";
+  logo.src = "https://www.servientrega.com.ec/images/logo.png";
   logo.alt = "";
-  logo.width = "100px";
 
   container.appendChild(logo);
 
