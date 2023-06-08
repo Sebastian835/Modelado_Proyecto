@@ -63,13 +63,18 @@
                         </div>
                         <div id="opciones" style="display: none;">
                             <div class="form-group">
-                                <label for="marca">Placa</label>
+                                <label for="placa">Placa</label>
                                 <input type="text" class="form-control" id="placa" name="placa">
                             </div>
                             <div class="form-group">
                                 <label for="modelo">Modelo</label>
                                 <input type="text" class="form-control" id="modelo" name="modelo">
                             </div>
+                            <div class="form-group">
+                                <label for="marca">Marca</label>
+                                <input type="text" class="form-control" id="marca" name="marca">
+                            </div>
+
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success" style="margin-bottom: 4%;">Guardar</button>
@@ -176,7 +181,8 @@
                         <td>{{ documento.NumeroTelefono }}</td>
                         <td>
                             <span class="vehiculo" data-placa="{{ documento.Vehiculo.Placa }}"
-                                data-modelo="{{ documento.Vehiculo.Modelo }}">
+                                data-modelo="{{ documento.Vehiculo.Modelo }}"
+                                data-marca="{{ documento.Vehiculo.Marca }}">
                                 {{ documento.Vehiculo.Tipo }}
                             </span>
                         </td>

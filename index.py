@@ -8,6 +8,10 @@ import random
 
 load_dotenv()
 
+#MONGO_HOST="localhost"          #servidor local para la conexion
+#MONGO_PUERTO="27017"            #puerto para la conexion
+#MONGO_TIEMPO_FUERA=1000
+
 MONGO_URI = os.getenv("MONGO_URI")
 MONGO_BASEDATOS = "ServiEntrega"  # nombre de la base de datos
 bdd = pymongo.MongoClient(MONGO_URI)
@@ -211,7 +215,8 @@ def RegistroRepartidor():
         vehiculo = {
             "Tipo": request.form['vehiculo'],
             "Placa": request.form['placa'],
-            "Modelo": request.form['modelo']
+            "Modelo": request.form['modelo'],
+            "Marca": request.form['marca']
         }
         repartidor = {
             "_id": nuevo_id_str,
@@ -325,6 +330,7 @@ def UpdatePedido():
 
 
     return render_template("layouts/clientes.html")
+
 
 
 #--RUTAS--

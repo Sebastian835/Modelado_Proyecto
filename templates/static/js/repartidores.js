@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     vehiculos[i].addEventListener("click", function () {
       var placa = this.getAttribute("data-placa");
       var modelo = this.getAttribute("data-modelo");
+      var marca = this.getAttribute("data-marca");
 
       // Crear el modal
       var modal = document.createElement("div");
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="modal-body">
                             <p><strong>Placa:</strong> ${placa}</p>
                             <p><strong>Modelo:</strong> ${modelo}</p>
+                            <p><strong>Marca:</strong> ${marca}</p>
                         </div>
                     </div>
                 </div>
