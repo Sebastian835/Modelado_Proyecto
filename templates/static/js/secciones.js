@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ul.className = "navbar-nav";
 
   var items = [
-    { href: "#", text: "Home" },
+    { href: "/", text: "Home" },
     { href: "/clientes", text: "Clientes" },
     { href: "/repartidores", text: "Repartidores" },
     { href: "/pagos", text: "Pagos" },
