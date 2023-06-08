@@ -1,33 +1,52 @@
 function AgregarRepartidor() {
-    var formulario = document.querySelector('.AgregarRepartidor');
-    if (formulario.style.display === 'none') {
-        formulario.style.display = 'block';
-    } else {
-        formulario.style.display = 'none';
-    }
+  var formulario = document.querySelector(".AgregarRepartidor");
+  if (formulario.style.display === "none") {
+    formulario.style.display = "block";
+  } else {
+    formulario.style.display = "none";
+  }
 }
 
 function UpdateRepartidores() {
-    var formulario = document.querySelector('.UpdateRepartidores');
+  var formulario = document.querySelector(".UpdateRepartidores");
 
-    if (formulario.style.display === 'none') {
-        formulario.style.display = 'block'; 
-    } else {
-        formulario.style.display = 'none'; 
-    }
+  if (formulario.style.display === "none") {
+    formulario.style.display = "block";
+  } else {
+    formulario.style.display = "none";
+  }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var vehiculos = document.getElementsByClassName('vehiculo');
-    for (var i = 0; i < vehiculos.length; i++) {
-        vehiculos[i].addEventListener('click', function() {
-            var placa = this.getAttribute('data-placa');
-            var modelo = this.getAttribute('data-modelo');
-            
-            // Crear el modal
-            var modal = document.createElement('div');
-            modal.className = 'modal fade';
-            modal.innerHTML = `
+function AgregarRuta() {
+  var formulario = document.querySelector(".AgregarRuta");
+  if (formulario.style.display === "none") {
+    formulario.style.display = "block";
+  } else {
+    formulario.style.display = "none";
+  }
+}
+
+function UpdateRuta() {
+  var formulario = document.querySelector(".UpdateRuta");
+
+  if (formulario.style.display === "none") {
+    formulario.style.display = "block";
+  } else {
+    formulario.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  var vehiculos = document.getElementsByClassName("vehiculo");
+  for (var i = 0; i < vehiculos.length; i++) {
+    vehiculos[i].addEventListener("click", function () {
+      var placa = this.getAttribute("data-placa");
+      var modelo = this.getAttribute("data-modelo");
+
+      // Crear el modal
+      var modal = document.createElement("div");
+      modal.className = "modal fade";
+      modal.innerHTML = `
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -41,28 +60,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `;
-            
-            // Agregar el modal al documento
-            document.body.appendChild(modal);
-            
-            // Mostrar el modal
-            $(modal).modal('show');
-            
-            // Remover el modal del documento después de cerrarlo
-            $(modal).on('hidden.bs.modal', function() {
-                document.body.removeChild(modal);
-            });
-        });
-    }
+
+      // Agregar el modal al documento
+      document.body.appendChild(modal);
+
+      // Mostrar el modal
+      $(modal).modal("show");
+
+      // Remover el modal del documento después de cerrarlo
+      $(modal).on("hidden.bs.modal", function () {
+        document.body.removeChild(modal);
+      });
+    });
+  }
 });
 
 function mostrarOpciones() {
-    var vehiculo = document.getElementById("vehiculo").value;
-    var opcionesDiv = document.getElementById("opciones");
+  var vehiculo = document.getElementById("vehiculo").value;
+  var opcionesDiv = document.getElementById("opciones");
 
-    if (vehiculo !== "") {
-      opcionesDiv.style.display = "block";
-    } else {
-      opcionesDiv.style.display = "none";
-    }
+  if (vehiculo !== "") {
+    opcionesDiv.style.display = "block";
+  } else {
+    opcionesDiv.style.display = "none";
+  }
 }

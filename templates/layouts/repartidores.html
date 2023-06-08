@@ -101,8 +101,9 @@
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="d-grid gap-2" style="margin-bottom: 2%;">
-                                <label>Ingrese ID del repartidores:</label>
-                                <input type="text" class="form-control" id="_idRepartidor" name="_idRepartidor">
+                                <label>Actualizar datos del Repartidor</label>
+                                <input type="text" class="form-control" id="_idRepartidor" name="_idRepartidor"
+                                    placeholder="Id Repartidor">
                                 <button onclick="UpdateRepartidores()" type="submit"
                                     class="btn btn-info">Buscar</button>
                             </div>
@@ -210,6 +211,97 @@
             </table>
         </div>
 
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="d-grid gap-2">
+                            <button onclick="AgregarRuta()" type="button" class="btn btn-info"
+                                style="margin-bottom: 2%;">Ingresar
+                                Ruta</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <form class="AgregarRuta" action="#" method="post" style="display: none;">
+
+                        <div class=" form-group mb-3">
+                            <label for="referencia">Cliente</label>
+                            <input type="text" class="form-control" id="referencia" name="referencia" required>
+                        </div>
+
+
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary" style="margin-bottom: 3%;">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>Datos Repartidor</th>
+                        <th>Pedido</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ruta in rutasDatos %}
+                    <tr>
+                        <td>{{ ruta._id }}</td>
+                        <td>
+                            ({{ ruta.IDRepartidor.id}}){% if loop.index - 1 < nombre_Ref_Repar|length %} {{
+                                nombre_Ref_Repar[loop.index - 1] }}{% endif %} </td>
+                        <td>
+                            ({{ ruta.Pedido.id}}){% if loop.index - 1 < pedido_Ref_Repar|length %} {{
+                                pedido_Ref_Repar[loop.index - 1] }}{% endif %} </td>
+                        <td>{{ ruta.Estado }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <form class="UpdateRuta" action="/repartidores" method="post">
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="d-grid gap-2" style="margin-bottom: 2%;">
+                                <label>Actualizar Ruta</label>
+                                <input type="text" class="form-control" id="_ruta" name="_ruta" placeholder="Id Ruta">
+                                <button onclick="UpdateRuta()" type="submit" class="btn btn-info">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="/UpdateRuta" method="post">
+                    {% for ruta in id_Ruta_Datos %}
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" id="_ruta" name="_ruta" value={{ruta._id}} readonly>
+                        <label for="estado">Estado</label>
+                        <select class="form-control" id="estado" name="estado">
+                            {% if ruta.Estado == "En progreso" %}
+                            <option value="En progreso" selected>En progreso</option>
+                            <option value="Entregado">Entregado</option>
+                            {% elif ruta.Estado == "Entregado" %}
+                            <option value="Entregado" selected>Entregado</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;">Actualizar</button>
+                    {%endfor%}
+                </form>
+            </div>
+        </div>
+
         <footer class="bg-success py-4">
             <div class="container text-center">
                 <h5>Síguenos en redes sociales:</h5>
@@ -220,6 +312,7 @@
                 </div>
             </div>
         </footer>
+
     </div>
 
 </body>

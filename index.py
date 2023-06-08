@@ -126,14 +126,52 @@ def UpdateCliente():
 def repartidores():
     repartidores_collection = baseDatos["Repartidores"]
     resultados = repartidores_collection.find()
+
+    rutas_collection = baseDatos["Rutas"]
+    ruta = rutas_collection.find()
+
+    pedidos_collection = baseDatos["Pedidos"]
+
+    nombre_Ref_Repar = []  
+    nombre_Ref_Repar.clear()
+    pedido_Ref_Repar = []
+    pedido_Ref_Repar.clear()
+
+    for rutita in ruta:
+        repartidor_referenciado = repartidores_collection.database.dereference(rutita["IDRepartidor"])
+        pedido_referenciado = pedidos_collection.database.dereference(rutita["Pedido"])
+
+        if repartidor_referenciado and pedido_referenciado:
+            repartidor_referenciado = repartidor_referenciado["Nombre"]
+            keys = list(pedido_referenciado.keys())
+
+            nombre_Ref_Repar.append(repartidor_referenciado)  
+            pedido_Ref_Repar.append(pedido_referenciado[keys[4]])  
+
+            ruta = rutas_collection.find()
     
     if request.method == "POST":
-        id_repartidor = request.form["_idRepartidor"]
-        nombre_repartidor = baseDatos.Repartidores.find({"_id": id_repartidor})
+        try:
+            id_repartidor = request.form["_idRepartidor"]
+            nombre_repartidor = baseDatos.Repartidores.find({"_id": id_repartidor})
+            return render_template("layouts/repartidores.html",  pedido_Ref_Repar=pedido_Ref_Repar, nombre_Ref_Repar=nombre_Ref_Repar, 
+                               repartidores_datos=resultados, DatoRepartidor=nombre_repartidor, rutasDatos=ruta)
+        except:
+            print("Seco 1")
 
-        return render_template("layouts/repartidores.html", repartidores_datos=resultados, DatoRepartidor=nombre_repartidor)
+        try:
+            id_Ruta = request.form["_ruta"]
+            datosRutaBusqueda = baseDatos.Rutas.find({"_id": id_Ruta})
+            return render_template("layouts/repartidores.html", id_Ruta_Datos=datosRutaBusqueda, pedido_Ref_Repar=pedido_Ref_Repar, nombre_Ref_Repar=nombre_Ref_Repar, 
+                               repartidores_datos=resultados, rutasDatos=ruta)
+        except:
+            print("Seco 2")
 
-    return render_template("layouts/repartidores.html", repartidores_datos=resultados)
+        return render_template("layouts/repartidores.html",  pedido_Ref_Repar=pedido_Ref_Repar, nombre_Ref_Repar=nombre_Ref_Repar, 
+                               repartidores_datos=resultados, rutasDatos=ruta)
+
+    return render_template("layouts/repartidores.html", pedido_Ref_Repar=pedido_Ref_Repar, repartidores_datos=resultados, rutasDatos = ruta, 
+                           nombre_Ref_Repar=nombre_Ref_Repar, pedido_referenciado=pedido_referenciado)
 
 @app.route("/RegistroRepartidor", methods=["GET", "POST"])  
 def RegistroRepartidor():
@@ -252,6 +290,18 @@ def EliminarPedido():
 
     return render_template("layouts/clientes.html")
 
+@app.route("/UpdateRuta", methods=["GET", "POST"])  
+def UpdateRuta():
+    if(request.method == "POST"):
+        _id = request.form['_ruta']
+        estado = request.form['estado']
+
+        baseDatos["Rutas"].update_one({"_id": _id}, {"$set": {"Estado": estado}})
+
+        return redirect(url_for('repartidores'))
+
+
+    return render_template("layouts/repartidores.html")
 
 
 
