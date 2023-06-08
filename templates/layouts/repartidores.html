@@ -266,7 +266,8 @@
                 <form action="/UpdateRuta" method="post">
                     {% for ruta in id_Ruta_Datos %}
                     <div class="form-group mb-3">
-                        <input type="text" class="form-control" id="_ruta" name="_ruta" value={{ruta._id}} readonly>
+                        <input type="text" class="form-control" id="_ruta" name="_ruta" value={{ruta._id}}
+                            style="display: none;">
                         <label for="estado">Estado</label>
                         <select class="form-control" id="estado" name="estado">
                             {% if ruta.Estado == "En progreso" %}

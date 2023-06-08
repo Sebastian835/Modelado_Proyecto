@@ -51,10 +51,22 @@ def clientes():
             resultadosPedidos = pedidos_collection.find()
 
     if request.method == "POST":
-        id_cliente = request.form["_idCliente"]
-        nombre_cliente = baseDatos.Clientes.find({"_id": id_cliente})
+        try:
+            id_cliente = request.form["_idCliente"]
+            nombre_cliente = baseDatos.Clientes.find({"_id": id_cliente})
+            
+            return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente, pedidos_datos= resultadosPedidos)
+        except:
+            print("Seco 1")
+        
+        try:
+            id_Pedido = request.form["_pedido"]
+            pedidoDato = baseDatos.Pedido.find({"_id": id_Pedido})
 
-        return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente, pedidos_datos= resultadosPedidos)
+            return render_template("layouts/clientes.html", clientes_datos=resultados, pedidoDatito = pedidoDato, pedidos_datos= resultadosPedidos)
+        except:
+            print("Seco 2")
+
 
     return render_template("layouts/clientes.html",  clientes_datos=resultados, pedidos_datos= resultadosPedidos, 
                            nombres_clientes=nombres_clientes, fecha_clientesP=fechas_clientes)
@@ -116,6 +128,7 @@ def UpdateCliente():
         correo = request.form['correo']
         
         baseDatos["Clientes"].update_one({"Cedula": cedula}, {"$set": {"Nombre": nombre, "Apellido": apellido, "Direccion":direccion, "NumeroTelefono": telefono, "CorreoElectronico":correo, "Cedula": cedula}})
+        return redirect(url_for('clientes'))
 
     return render_template("layouts/clientes.html", clientes_datos=resultados)
 
@@ -157,7 +170,7 @@ def repartidores():
             return render_template("layouts/repartidores.html",  pedido_Ref_Repar=pedido_Ref_Repar, nombre_Ref_Repar=nombre_Ref_Repar, 
                                repartidores_datos=resultados, DatoRepartidor=nombre_repartidor, rutasDatos=ruta)
         except:
-            print("Seco 1")
+            print("Seco 3")
 
         try:
             id_Ruta = request.form["_ruta"]
@@ -165,7 +178,7 @@ def repartidores():
             return render_template("layouts/repartidores.html", id_Ruta_Datos=datosRutaBusqueda, pedido_Ref_Repar=pedido_Ref_Repar, nombre_Ref_Repar=nombre_Ref_Repar, 
                                repartidores_datos=resultados, rutasDatos=ruta)
         except:
-            print("Seco 2")
+            print("Seco 4")
 
         return render_template("layouts/repartidores.html",  pedido_Ref_Repar=pedido_Ref_Repar, nombre_Ref_Repar=nombre_Ref_Repar, 
                                repartidores_datos=resultados, rutasDatos=ruta)
@@ -290,6 +303,22 @@ def EliminarPedido():
 
     return render_template("layouts/clientes.html")
 
+@app.route("/UpdatePedido", methods=["GET", "POST"])  
+def UpdatePedido():
+    if(request.method == "POST"):
+        _id = request.form['_ruta']
+        destino = request.form['destino']
+        descripcion = request.form['descripcion']
+
+        baseDatos["Pedidos"].update_one({"_id": _id}, {"$set": {"DireccionDestino": destino, "DescripcionPaquete": descripcion}})
+
+        return redirect(url_for('clientes'))
+
+
+    return render_template("layouts/clientes.html")
+
+
+#--RUTAS--
 @app.route("/UpdateRuta", methods=["GET", "POST"])  
 def UpdateRuta():
     if(request.method == "POST"):
