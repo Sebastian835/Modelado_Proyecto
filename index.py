@@ -14,8 +14,8 @@ baseDatos = bdd[MONGO_BASEDATOS]
 
 
 # Inicializar la aplicación
-app = Flask(__name__, template_folder='templates')              #indica la carpte de los templates
-app._static_folder = os.path.abspath("templates/static/")                       #Carpeta static de los templates
+app = Flask(__name__, template_folder='templates')              #indica la carpeta de los templates
+app._static_folder = os.path.abspath("templates/static/")       #Carpeta static de los templates
 
 
 @app.route("/", methods=["GET", "POST"])  # Ruta principal

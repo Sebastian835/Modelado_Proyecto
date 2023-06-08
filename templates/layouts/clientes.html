@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="static/css/navbar.css">
     <link rel="stylesheet" href="static/css/clientes.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="../static/img/favicon.png" type="image/png" sizes="32x32">
+    <script src="{{ url_for('static', filename='js/secciones.js') }}"></script>
 
-    <title>ServiEntrega</title>
+    <title>ServiEntrega | Clientes</title>
 
     <style>
         .formulario {
@@ -23,35 +25,13 @@
 <body>
 
     <div class="container">
-        <!--HEADER-->
-        <header class="row text-center justify-content-around p-3">
-            <div class="d-flex justify-content-center">
-                <img src="https://www.servientrega.com/wps/wcm/connect/6a8668e1-673c-4908-adfa-83b1180ae41a/logo-horizontal-color.png?MOD=AJPERES&CACHEID=ROOTWORKSPACE-6a8668e1-673c-4908-adfa-83b1180ae41a-nM1e-G4"
-                    class="img-fluid" style="max-width: 25%;" />
-            </div>
-        </header>
-        <section id="navbar" class="row p-2 text-center">
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/" class="font-weight-light link-unstyled">Home</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/clientes" class="font-weight-light link-unstyled">Clientes</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/repartidores" class="font-weight-light link-unstyled">Repartidores</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="#" class="font-weight-light link-unstyled">Pedidos</a>
-            </div>
-        </section>
-
         <!--BODY-->
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="row mt-3">
                     <div class="col-12">
-                        <div class="d-grid gap-2">
-                            <button onclick="AgregarCliente()" type="button" class="btn btn-info">Ingresar
+                        <div class="d-grid gap-2" style="margin-bottom: 1%;">
+                            <button onclick="AgregarCliente()" type="button" class="btn btn-success">Ingresar
                                 Cliente</button>
                         </div>
                     </div>
@@ -59,37 +39,37 @@
                 <div class="col-12">
                     <form class="AgregarCliente" action="/RegistroCliente" method="post" style="display: none;">
                         <div class="form-group mb-3" style="margin-top: 2%;">
-                            <label for="nombre">Nombre:</label>
+                            <label for="nombre" style="margin-bottom: 1%;">Nombre:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="apellido">Apellido:</label>
+                            <label for="apellido" style="margin-bottom: 1%;">Apellido:</label>
                             <input type="text" class="form-control" id="apellido" name="apellido" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="cedula">Cedula:</label>
+                            <label for="cedula" style="margin-bottom: 1%;">Cedula:</label>
                             <input type="text" class="form-control" id="cedula" name="cedula" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="direccion">Dirección:</label>
+                            <label for="direccion" style="margin-bottom: 1%;">Dirección:</label>
                             <input type="text" class="form-control" id="direccion" name="direccion" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="telefono">Número de teléfono:</label>
+                            <label for="telefono" style="margin-bottom: 1%;">Número de teléfono:</label>
                             <input type="number" class="form-control" id="telefono" name="telefono" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="correo">Correo electrónico:</label>
+                            <label for="correo" style="margin-bottom: 1%;">Correo electrónico:</label>
                             <input type="email" class="form-control" id="correo" name="correo" required>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary" style="margin-bottom: 3%;">Guardar</button>
+                            <button type="submit" class="btn btn-success" style="margin-bottom: 4%;">Guardar</button>
                         </div>
                     </form>
                 </div>
@@ -99,9 +79,8 @@
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="d-grid gap-2">
-                                <label>Actualizar datos del Cliente</label>
-                                <input type="text" class="form-control" id="_idCliente" name="_idCliente"
-                                    placeholder="Id Cliente">
+                                <label>Ingrese ID del cliente:</label>
+                                <input type="text" class="form-control" id="_idCliente" name="_idCliente">
                                 <button onclick="UpdateCliente()" type="submit" class="btn btn-info"
                                     style="margin-bottom: 3%;">Buscar</button>
                             </div>
@@ -112,40 +91,40 @@
                 <form action="/UpdateCliente" method="post">
                     {% for cliente in DatoCliente %}
                     <div class="form-group mb-3">
-                        <label for="nombre">Nombre:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Nombre:</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" value="{{ cliente.Nombre }}">
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre">Apellido:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Apellido:</label>
                         <input type="text" class="form-control" id="apellido" name="apellido"
                             value="{{ cliente.Apellido }}" readonly>
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre">Cedula:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Cedula:</label>
                         <input type="text" class="form-control" id="cedula" name="cedula" value="{{ cliente.Cedula }}"
                             readonly>
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre">Direccion:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Direccion:</label>
                         <input type="text" class="form-control" id="direccion" name="direccion"
                             value="{{ cliente.Direccion }}">
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre">Numero Telefono:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Numero Telefono:</label>
                         <input type="text" class="form-control" id="telefono" name="telefono"
                             value="{{ cliente.NumeroTelefono }}">
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre">Correo Electronico:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Correo Electronico:</label>
                         <input type="text" class="form-control" id="correo" name="correo"
                             value="{{ cliente.CorreoElectronico }}">
                     </div>
-                    <button type="submit" class="btn btn-primary"
+                    <button type="submit" class="btn btn-success"
                         style="margin-top: 2%; margin-bottom: 3%;">Actualizar</button>
                     {% endfor %}
 
@@ -157,7 +136,7 @@
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th>id</th>
+                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Cedula</th>
@@ -195,8 +174,8 @@
             <div class="col-12 col-md-6">
                 <div class="row mt-3">
                     <div class="col-12">
-                        <div class="d-grid gap-2">
-                            <button onclick="AgregarPedido()" type="button" class="btn btn-info"
+                        <div class="d-grid gap-2" style="margin-bottom: 1%;">
+                            <button onclick="AgregarPedido()" type="button" class="btn btn-success"
                                 style="margin-bottom: 2%;">Ingresar
                                 Pedido</button>
                         </div>
@@ -206,28 +185,28 @@
                     <form class="AgregarPedido" action="/NuevoPedido" method="post" style="display: none;">
 
                         <div class=" form-group mb-3">
-                            <label for="referencia">Cliente</label>
+                            <label for="referencia" style="margin-bottom: 1%;">Cliente</label>
                             <input type="text" class="form-control" id="referencia" name="referencia" required>
                         </div>
 
                         <div class=" form-group mb-3">
-                            <label for="fecha_hora">Fecha y Hora</label>
+                            <label for="fecha_hora" style="margin-bottom: 1%;">Fecha y Hora</label>
                             <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora"
                                 required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="destino">Destino</label>
+                            <label for="destino" style="margin-bottom: 1%;">Destino</label>
                             <input type="text" class="form-control" id="destino" name="destino" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="descripcion">Descripcion:</label>
+                            <label for="descripcion" style="margin-bottom: 1%;">Descripcion:</label>
                             <input type="text" class="form-control" id="descripcion" name="descripcion" required>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary" style="margin-bottom: 3%;">Guardar</button>
+                            <button type="submit" class="btn btn-success" style="margin-bottom: 4%;">Guardar</button>
                         </div>
                     </form>
                 </div>
@@ -237,7 +216,7 @@
                 <table class="table">
                     <thead class="table-dark">
                         <tr>
-                            <th>id</th>
+                            <th>ID</th>
                             <th>Datos Cliente</th>
                             <th>Fecha y Hora del Pedido</th>
                             <th>Destino</th>

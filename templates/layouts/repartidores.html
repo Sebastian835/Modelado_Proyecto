@@ -10,71 +10,52 @@
     <link rel="stylesheet" href="static/css/navbar.css">
     <link rel="stylesheet" href="static/css/repartidores.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="../static/img/favicon.png" type="image/png" sizes="32x32">
+    <script src="{{ url_for('static', filename='js/secciones.js') }}"></script>
 
-    <title>ServiEntregas</title>
+    <title>ServiEntrega | Repartidores</title>
 
 </head>
 
 <body>
     <div class="container">
-        <!--HEADER-->
-        <header class="row text-center justify-content-around p-3">
-            <div class="d-flex justify-content-center">
-                <img src="https://www.servientrega.com/wps/wcm/connect/6a8668e1-673c-4908-adfa-83b1180ae41a/logo-horizontal-color.png?MOD=AJPERES&CACHEID=ROOTWORKSPACE-6a8668e1-673c-4908-adfa-83b1180ae41a-nM1e-G4"
-                    class="img-fluid" style="max-width: 25%;" />
-            </div>
-        </header>
-        <section id="navbar" class="row p-2 text-center">
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/" class="font-weight-light link-unstyled">Home</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/clientes" class="font-weight-light link-unstyled">Clientes</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/repartidores" class="font-weight-light link-unstyled">Repartidores</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="#" class="font-weight-light link-unstyled">Pedidos</a>
-            </div>
-        </section>
-
         <!--BODY-->
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="row mt-3">
                     <div class="col-12">
                         <div class="d-grid gap-2">
-                            <button onclick="AgregarRepartidor()" type="button" class="btn btn-info">Ingresar
+                            <button onclick="AgregarRepartidor()" type="button" class="btn btn-success">Ingresar
                                 Repartidor</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <form class="AgregarRepartidor" action="/RegistroRepartidor" method="post" style="display: none;">
-                        <div class="form-group mb-3" style="margin-top: 2%;">
-                            <label for="nombre">Nombre:</label>
+                        <div class="form-group mb-3" style="margin-top: 3%;">
+                            <label for="nombre" style="margin-bottom: 1%;">Nombre:</label>
                             <input type="text" class="form-control input-sm" id="nombre" name="nombre" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="apellido">Apellido:</label>
+                            <label for="apellido" style="margin-bottom: 1%;">Apellido:</label>
                             <input type="text" class="form-control input-sm" id="apellido" name="apellido" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="cedula">Cedula:</label>
+                            <label for="cedula" style="margin-bottom: 1%;">Cedula:</label>
                             <input type="text" class="form-control input-sm" id="cedula" name="cedula" required>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="telefono">Número de teléfono:</label>
+                            <label for="telefono" style="margin-bottom: 1%;">Número de teléfono:</label>
                             <input type="number" class="form-control input-sm" id="telefono" name="telefono" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="vehiculo">Tipo de vehículo</label>
-                            <select class="form-control" id="vehiculo" name="vehiculo" onchange="mostrarOpciones()">
+                            <label for="vehiculo" style="margin-bottom: 1%;">Tipo de vehículo</label>
+                            <select class="form-control" id="vehiculo" name="vehiculo" onchange="mostrarOpciones()"
+                                style="margin-bottom: 2%;">
                                 <option value="" disabled selected hidden>Seleccionar...</option>
                                 <option value="Automóvil">Automóvil</option>
                                 <option value="Moto">Moto</option>
@@ -91,7 +72,7 @@
                             </div>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;">Guardar</button>
+                        <button type="submit" class="btn btn-success" style="margin-bottom: 4%;">Guardar</button>
                     </form>
                 </div>
             </div>
@@ -100,13 +81,18 @@
                 <form class="UpdateRepartidores" action="/repartidores" method="post">
                     <div class="row mt-3">
                         <div class="col-12">
-                            <div class="d-grid gap-2" style="margin-bottom: 2%;">
+                            <<<<<<< HEAD <div class="d-grid gap-2" style="margin-bottom: 2%;">
                                 <label>Actualizar datos del Repartidor</label>
                                 <input type="text" class="form-control" id="_idRepartidor" name="_idRepartidor"
                                     placeholder="Id Repartidor">
-                                <button onclick="UpdateRepartidores()" type="submit"
-                                    class="btn btn-info">Buscar</button>
-                            </div>
+                                =======
+                                <div class="d-grid gap-2" style="margin-bottom: 1%;">
+                                    <label>Ingrese ID del repartidor:</label>
+                                    <input type="text" class="form-control" id="_idRepartidor" name="_idRepartidor">
+                                    >>>>>>> 3351c062ebf76c1c6de754e22db1bc1f13edc987
+                                    <button onclick="UpdateRepartidores()" type="submit"
+                                        class="btn btn-success">Buscar</button>
+                                </div>
                         </div>
                     </div>
                 </form>
@@ -114,31 +100,31 @@
                 <form action="/UpdateRepartidores" method="post">
                     {% for repartidor in DatoRepartidor %}
                     <div class="form-group mb-3" style="margin-top: 2%;">
-                        <label for="nombre">Nombre:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Nombre:</label>
                         <input type="text" class="form-control" id="nombre" name="nombre"
                             value="{{ repartidor.Nombre }}">
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre">Apellido:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Apellido:</label>
                         <input type="text" class="form-control" id="apellido" name="apellido"
                             value="{{ repartidor.Apellido }}" readonly>
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre">Cedula:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Cedula:</label>
                         <input type="text" class="form-control" id="cedula" name="cedula"
                             value="{{ repartidor.Cedula }}" readonly>
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre">Telefono:</label>
+                        <label for="nombre" style="margin-bottom: 1%;">Telefono:</label>
                         <input type="text" class="form-control" id="telefono" name="telefono"
                             value="{{ repartidor.NumeroTelefono }}">
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="tipo">Tipo:</label>
+                        <label for="tipo" style="margin-bottom: 1%;">Tipo:</label>
                         <select class="form-control" id="vehiculo" name="vehiculo" onchange="toggleReadOnly(this)">
                             {% if repartidor.Vehiculo.Tipo == "Automóvil" %}
                             <option value="Automóvil" selected>Automóvil</option>
@@ -151,7 +137,7 @@
                     </div>
 
                     <div class="form-group mb-3 row">
-                        <label for="placa" class="col-sm-3 col-form-label">Placa:</label>
+                        <label for="placa" class="col-sm-3 col-form-label" style="margin-bottom: 1%;">Placa:</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="placa" name="placa"
                                 value="{{ repartidor.Vehiculo.Placa }}">
@@ -159,13 +145,13 @@
                     </div>
 
                     <div class="form-group mb-3 row">
-                        <label for="modelo" class="col-sm-3 col-form-label">Modelo:</label>
+                        <label for="modelo" class="col-sm-3 col-form-label" style="margin-bottom: 1%;">Modelo:</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="modelo" name="modelo"
                                 value="{{ repartidor.Vehiculo.Modelo }}">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="margin-bottom: 2%;">Actualizar</button>
+                    <button type="submit" class="btn btn-success" style="margin-bottom: 4%;">Actualizar</button>
                     {%endfor%}
                 </form>
             </div>
@@ -176,7 +162,7 @@
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th>id</th>
+                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Cedula</th>
