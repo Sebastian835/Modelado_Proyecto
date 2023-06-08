@@ -292,9 +292,12 @@ def NuevoPedido():
         }
 
         pedido_id = pedido["_id"]
-        NuevoRuta(pedido_id)
-        
+
         baseDatos.Pedidos.insert_one(pedido)
+
+        NuevoRuta(pedido_id)
+        NuevoPago(pedido_id)
+        
         return redirect(url_for('clientes'))
 
     return render_template("layouts/clientes.html")
@@ -371,68 +374,92 @@ def UpdateRuta():
 
     return render_template("layouts/repartidores.html")
 
+
+
 #--PAGOS--
+@app.route("/pagos", methods=["GET", "POST"])  
+def pagos():
+    pagos_collection = baseDatos["Pagos"]
+    pagos = pagos_collection.find()
 
+    pedidos_collection = baseDatos["Pedidos"]
 
+    clientes_collection = baseDatos["Clientes"]
 
-@app.route("/NuevoPago", methods=["GET", "POST"])  
-def NuevoPago():
-    if(request.method == "POST"):
-        ultimo_documento = baseDatos.Pagos.find_one({}, sort=[('_id', -1)])
-        print(ultimo_documento)
+    nombres_clientes = []
+    nombres_clientes.clear()
 
-        if ultimo_documento is not None:
-            ultimo_id = int(ultimo_documento['_id'])
-            nuevo_id = ultimo_id + 1
-        else:
-            nuevo_id = 1
-        nuevo_id_str = str(nuevo_id).zfill(3)
+    for pago in pagos:
+        id_pedido = pago["IDPedido"].id
+        pedido = pedidos_collection.find_one({"_id": id_pedido})
 
-        referencia = request.form['referencia']
-        monto =  request.form['monto']
-        metodo_pago =  request.form['metodo_pago']
-        pago =  request.form['pago']
+        if pedido:
+            id_cliente = pedido["IDCliente"].id
+            cliente = clientes_collection.find_one({"_id": id_cliente})
+
+        if cliente:
+            nombre_cliente = cliente["Nombre"]
+            nombres_clientes.append(nombre_cliente)
+
+        pagos = pagos_collection.find()
+
+    if request.method == "POST":
+        try:
+            id_Pago = request.form["_pago"]
+            buscaPago = baseDatos.Pagos.find({"_id": id_Pago})
+            
+            return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, pagoCliente=buscaPago)
         
-        
-        pago = {
-            "_id": nuevo_id_str,
-            "IDPedido": {
-                "$ref": "Pedidos",
-                "$id": referencia
-            },
-            "Monto": monto,
-            "MetodoPago" : metodo_pago,
-            "Pagado" : pago
-        }
+        except:
+            print("Seco 5")
 
-        baseDatos.Pagos.insert_one(pago)
-        return redirect(url_for('pagos'))
+    return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes)
 
-    return render_template("layouts/pagos.html")
+def NuevoPago(pedido):
+    ultimo_documento = baseDatos.Rutas.find_one({}, sort=[('_id', -1)])
+    if ultimo_documento is not None:
+        ultimo_id = int(ultimo_documento['_id'])
+        nuevo_id = ultimo_id + 1
+    else:
+        nuevo_id = 1
 
-@app.route("/EliminarPago", methods=["GET", "POST"])  
-def EliminarPago():
-    if(request.method == "POST"):
-        id = request.form['_id']
-        baseDatos.Pagos.delete_one({"_id": id})
+    nuevo_id_str = str(nuevo_id).zfill(3)  # Asegurar que tenga 2 dígitos con ceros a la izquierda
 
-        return redirect(url_for('pagos'))
+    monto_aleratorio = random.randint(5, 70)
 
-    return render_template("layouts/pagos.html")
+    nuevo_pago = {
+        "_id": nuevo_id_str,
+        "IDPedido": {
+            "$ref": "Pedidos",
+            "$id": pedido
+        },
+        "Monto": monto_aleratorio,
+        "MetodoPago": "Efectivo",
+        "Pagado": False
+    }
+    baseDatos.Pagos.insert_one(nuevo_pago)
 
 @app.route("/UpdatePago", methods=["GET", "POST"])  
 def UpdatePago():
     if(request.method == "POST"):
-        _id = request.form['_ruta']
-        destino = request.form['destino']
-        descripcion = request.form['descripcion']
+        _id = request.form['_pagadito']
+        metodoP = request.form['Metodo']
+        pagadoSN = request.form['pagado']
 
-        baseDatos["Pedidos"].update_one({"_id": _id}, {"$set": {"DireccionDestino": destino, "DescripcionPaquete": descripcion}})
+        if pagadoSN == "False":
+            n = False
+        else:
+            n = True
 
-        return redirect(url_for('clientes'))
+        baseDatos["Pagos"].update_one({"_id": _id}, {"$set": {"MetodoPago": metodoP, "Pagado": n}})
+
+        return redirect(url_for('pagos'))
 
 
-    return render_template("layouts/clientes.html")
+    return render_template("layouts/pagos.html")
+
+
+
 
 # main del programa
 if __name__ == "__main__":

@@ -23,79 +23,28 @@
 </head>
 
 <body>
-
-    <div class="row">
-
-        <div class="col-12 col-md-6">
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="d-grid gap-2" style="margin-bottom: 1%;">
-                        <button onclick="AgregarPago()" type="button" class="btn btn-success"
-                            style="margin-bottom: 2%;">Ingresar
-                            Pedido</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <form class="AgregarPedido" action="/NuevoPedido" method="post" style="display: none;">
-
-                    <div class=" form-group mb-3">
-                        <label for="referencia" style="margin-bottom: 1%;">Cliente</label>
-                        <input type="text" class="form-control" id="referencia" name="referencia" required>
-                    </div>
-
-                    <div class=" form-group mb-3">
-                        <label for="fecha_hora" style="margin-bottom: 1%;">Fecha y Hora</label>
-                        <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="destino" style="margin-bottom: 1%;">Destino</label>
-                        <input type="text" class="form-control" id="destino" name="destino" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="descripcion" style="margin-bottom: 1%;">Descripcion:</label>
-                        <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-                    </div>
-
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-success" style="margin-bottom: 4%;">Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
+    <br><br>
+    <div class="container">
         <div class="row">
             <table class="table">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>Datos Cliente</th>
-                        <th>Fecha y Hora del Pedido</th>
-                        <th>Destino</th>
-                        <th>Descripcion</th>
-                        <th>Accion</th>
+                        <th>Monto</th>
+                        <th>MetodoPago</th>
+                        <th>Pagado</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for documentoPedido in pedidos_datos %}
+                    {% for p in pagitos %}
                     <tr>
-                        <td>{{ documentoPedido._id }}</td>
-                        <td>
-                            ({{ documentoPedido.IDCliente.id}}){% if loop.index - 1 < nombres_clientes|length %} {{
-                                nombres_clientes[loop.index - 1] }}{% endif %} </td>
-                        <td>
-                            {% if loop.index - 1 < fecha_clientesP|length %} {{ fecha_clientesP[loop.index - 1] }}{%
-                                endif %} </td>
-                        <td>{{ documentoPedido.DireccionDestino }}</td>
-                        <td>{{ documentoPedido.DescripcionPaquete }}</td>
-                        <td>
-                            <form action="/EliminarPedido" method="post">
-                                <input type="hidden" name="_id" value="{{documentoPedido._id}}">
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
-                        </td>
+                        <td>{{ p._id }}</td>
+                        <td> ({{ p.IDPedido.id}}){% if loop.index - 1 < nombrecitos|length %} {{ nombrecitos[loop.index
+                                - 1] }}{% endif %} </td>
+                        <td>{{ p.Monto }}</td>
+                        <td>{{ p.MetodoPago }}</td>
+                        <td>{{ p.Pagado }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -105,42 +54,49 @@
 
     <div class="row">
         <div class="col-12 col-md-6">
-            <form class="UpdatePedido" action="/clientes" method="post">
+            <form class="UpdatePago" action="/pagos" method="post">
                 <div class="row mt-3">
                     <div class="col-12">
                         <div class="d-grid gap-2" style="margin-bottom: 2%;">
-                            <label>Actualizar Pedido</label>
-                            <input type="text" class="form-control" id="_pedido" name="_pedido" placeholder="Id Pedido">
-                            <button onclick="UpdatePedido()" type="submit" class="btn btn-success">Buscar</button>
+                            <label>Actualizar Pago</label>
+                            <input type="text" class="form-control" id="_pago" name="_pago" placeholder="Id Pago">
+                            <button onclick="UpdatePago()" type="submit" class="btn btn-success">Buscar</button>
                         </div>
                     </div>
                 </div>
             </form>
 
-            <form action="/UpdatePedido" method="post">
-                {% for Pedido in pedidoDatito %}
+            <form action="/UpdatePago" method="post">
+                {% for pagoC in pagoCliente %}
                 <div class="form-group mb-3">
+
                     <div class="form-group mb-3">
-                        <input type="text" class="form-control" id="_ruta" name="_ruta" value="{{Pedido._id}}" readonly
-                            style="display: none;">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="nombre" style="margin-bottom: 1%;">Destino</label>
-                        <input type="text" class="form-control" id="destino" name="destino"
-                            value="{{ Pedido.DireccionDestino }}">
+                        <input type="text" class="form-control" id="_pagadito" name="_pagadito" value="{{pagoC._id}}"
+                            readonly style="display: none;">
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="nombre" style="margin-bottom: 1%;">Descripcion</label>
-                        <input type="text" class="form-control" id="descripcion" name="descripcion"
-                            value="{{ Pedido.DescripcionPaquete }}">
+                        <label for="nombre" style="margin-bottom: 1%;">Metodo de Pago</label>
+                        <input type="text" class="form-control" id="Metodo" name="Metodo"
+                            value="{{ pagoC.MetodoPago }}">
                     </div>
+
+                    <label for="estado">Pagado</label>
+                    <select class="form-control" id="pagado" name="pagado">
+                        {% if pagoC.Pagado == False %}
+                        <option value="False" selected>False</option>
+                        <option value="True">True</option>
+                        {% elif pagoC.Pagado == True %}
+                        <option value="True" selected>True</option>
+                        {% endif %}
+                    </select>
 
                 </div>
                 <button type="submit" class="btn btn-success" style="margin-bottom: 2%;">Actualizar</button>
                 {%endfor%}
             </form>
         </div>
+    </div>
     </div>
 
 </body>
