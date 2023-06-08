@@ -3,6 +3,7 @@ import os
 import pymongo
 from dotenv import load_dotenv
 from datetime import datetime
+import random
 
 
 load_dotenv()
@@ -80,7 +81,6 @@ def clientes():
 def RegistroCliente():
     if(request.method == "POST"):
         ultimo_documento = baseDatos.Clientes.find_one({}, sort=[('_id', -1)])
-        print(ultimo_documento)
 
         if ultimo_documento is not None:
             ultimo_id = int(ultimo_documento['_id'])
@@ -195,7 +195,6 @@ def repartidores():
 def RegistroRepartidor():
     if(request.method == "POST"):
         ultimo_documento = baseDatos.Repartidores.find_one({}, sort=[('_id', -1)])
-        print(ultimo_documento)
 
         if ultimo_documento is not None:
             ultimo_id = int(ultimo_documento['_id'])
@@ -266,7 +265,6 @@ def UpdateRepartidores():
 def NuevoPedido():
     if(request.method == "POST"):
         ultimo_documento = baseDatos.Pedidos.find_one({}, sort=[('_id', -1)])
-        print(ultimo_documento)
 
         if ultimo_documento is not None:
             ultimo_id = int(ultimo_documento['_id'])
@@ -293,6 +291,9 @@ def NuevoPedido():
             "DescripcionPaquete" : descripcion
         }
 
+        pedido_id = pedido["_id"]
+        NuevoRuta(pedido_id)
+        
         baseDatos.Pedidos.insert_one(pedido)
         return redirect(url_for('clientes'))
 
@@ -324,6 +325,39 @@ def UpdatePedido():
 
 
 #--RUTAS--
+def NuevoRuta(pedido):
+    ultimo_documento = baseDatos.Rutas.find_one({}, sort=[('_id', -1)])
+    if ultimo_documento is not None:
+        ultimo_id = int(ultimo_documento['_id'])
+        nuevo_id = ultimo_id + 1
+    else:
+        nuevo_id = 1
+
+    nuevo_id_str = str(nuevo_id).zfill(3)  # Asegurar que tenga 2 dígitos con ceros a la izquierda
+    
+    _idRepartidores = baseDatos.Repartidores.find()
+    ids = []
+    ids.clear()
+    for registro in _idRepartidores:
+        ids.append(registro['_id'])
+
+    id_aleatorio = random.choice(ids)
+    id_string = str(id_aleatorio)
+
+    nueva_ruta = {
+        "_id": nuevo_id_str,
+        "IDRepartidor": {
+            "$ref": "Repartidores",
+            "$id": id_string
+        },
+        "Pedido": {
+            "$ref": "Pedidos",
+            "$id": pedido
+        },
+        "Estado": "En progreso"
+    }
+    baseDatos.Rutas.insert_one(nueva_ruta)
+ 
 @app.route("/UpdateRuta", methods=["GET", "POST"])  
 def UpdateRuta():
     if(request.method == "POST"):
