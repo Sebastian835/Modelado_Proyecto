@@ -55,17 +55,22 @@ def clientes():
             id_cliente = request.form["_idCliente"]
             nombre_cliente = baseDatos.Clientes.find({"_id": id_cliente})
             
-            return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente, pedidos_datos= resultadosPedidos)
+            return render_template("layouts/clientes.html", clientes_datos=resultados, DatoCliente=nombre_cliente, pedidos_datos= resultadosPedidos,
+                                   fecha_clientesP=fechas_clientes, nombres_clientes=nombres_clientes)
         except:
             print("Seco 1")
         
         try:
             id_Pedido = request.form["_pedido"]
-            pedidoDato = baseDatos.Pedido.find({"_id": id_Pedido})
-
-            return render_template("layouts/clientes.html", clientes_datos=resultados, pedidoDatito = pedidoDato, pedidos_datos= resultadosPedidos)
+            pedidoDato = baseDatos.Pedidos.find({"_id": id_Pedido})
+            
+            return render_template("layouts/clientes.html", clientes_datos=resultados, pedidoDatito = pedidoDato, pedidos_datos= resultadosPedidos,
+                                   fecha_clientesP=fechas_clientes, nombres_clientes=nombres_clientes)
         except:
             print("Seco 2")
+        
+        return render_template("layouts/clientes.html",  clientes_datos=resultados, pedidos_datos= resultadosPedidos, 
+                           nombres_clientes=nombres_clientes, fecha_clientesP=fechas_clientes)
 
 
     return render_template("layouts/clientes.html",  clientes_datos=resultados, pedidos_datos= resultadosPedidos, 

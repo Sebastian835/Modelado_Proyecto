@@ -1,3 +1,12 @@
+function UpdatePedido() {
+  var formulario = document.querySelector(".UpdatePedido");
+  if (formulario.style.display === "none") {
+    formulario.style.display = "block";
+  } else {
+    formulario.style.display = "none";
+  }
+}
+
 function AgregarCliente() {
   var formulario = document.querySelector(".AgregarCliente");
   if (formulario.style.display === "none") {
@@ -18,15 +27,6 @@ function UpdateCliente() {
 
 function AgregarPedido() {
   var formulario = document.querySelector(".AgregarPedido");
-  if (formulario.style.display === "none") {
-    formulario.style.display = "block";
-  } else {
-    formulario.style.display = "none";
-  }
-}
-
-function UpdatePedido() {
-  var formulario = document.querySelector(".UpdatePedido");
   if (formulario.style.display === "none") {
     formulario.style.display = "block";
   } else {

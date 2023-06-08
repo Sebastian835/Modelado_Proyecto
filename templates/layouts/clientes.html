@@ -79,7 +79,7 @@
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="d-grid gap-2">
-                                <label>Ingrese ID del cliente:</label>
+                                <label>Actualizar datos del Cliente</label>
                                 <input type="text" class="form-control" id="_idCliente" name="_idCliente">
                                 <button onclick="UpdateCliente()" type="submit" class="btn btn-success"
                                     style="margin-bottom: 3%;">Buscar</button>
@@ -270,7 +270,7 @@
                     <div class="form-group mb-3">
                         <div class="form-group mb-3">
                             <input type="text" class="form-control" id="_ruta" name="_ruta" value="{{Pedido._id}}"
-                                readonly>
+                                readonly style="display: none;">
                         </div>
                         <div class="form-group mb-3">
                             <label for="nombre" style="margin-bottom: 1%;">Destino</label>
@@ -290,7 +290,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 
 </body>
