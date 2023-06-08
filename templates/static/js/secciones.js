@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   container.className = "container bg-success";
 
   var logo = document.createElement("img");
-  logo.src = "{{ url_for('static', filename='img/logo.jpg') }}";
+  logo.src = "";
   logo.alt = "";
   logo.width = "100px";
 
