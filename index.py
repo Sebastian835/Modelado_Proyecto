@@ -371,7 +371,68 @@ def UpdateRuta():
 
     return render_template("layouts/repartidores.html")
 
+#--PAGOS--
 
+
+
+@app.route("/NuevoPago", methods=["GET", "POST"])  
+def NuevoPago():
+    if(request.method == "POST"):
+        ultimo_documento = baseDatos.Pagos.find_one({}, sort=[('_id', -1)])
+        print(ultimo_documento)
+
+        if ultimo_documento is not None:
+            ultimo_id = int(ultimo_documento['_id'])
+            nuevo_id = ultimo_id + 1
+        else:
+            nuevo_id = 1
+        nuevo_id_str = str(nuevo_id).zfill(3)
+
+        referencia = request.form['referencia']
+        monto =  request.form['monto']
+        metodo_pago =  request.form['metodo_pago']
+        pago =  request.form['pago']
+        
+        
+        pago = {
+            "_id": nuevo_id_str,
+            "IDPedido": {
+                "$ref": "Pedidos",
+                "$id": referencia
+            },
+            "Monto": monto,
+            "MetodoPago" : metodo_pago,
+            "Pagado" : pago
+        }
+
+        baseDatos.Pagos.insert_one(pago)
+        return redirect(url_for('pagos'))
+
+    return render_template("layouts/pagos.html")
+
+@app.route("/EliminarPago", methods=["GET", "POST"])  
+def EliminarPago():
+    if(request.method == "POST"):
+        id = request.form['_id']
+        baseDatos.Pagos.delete_one({"_id": id})
+
+        return redirect(url_for('pagos'))
+
+    return render_template("layouts/pagos.html")
+
+@app.route("/UpdatePago", methods=["GET", "POST"])  
+def UpdatePago():
+    if(request.method == "POST"):
+        _id = request.form['_ruta']
+        destino = request.form['destino']
+        descripcion = request.form['descripcion']
+
+        baseDatos["Pedidos"].update_one({"_id": _id}, {"$set": {"DireccionDestino": destino, "DescripcionPaquete": descripcion}})
+
+        return redirect(url_for('clientes'))
+
+
+    return render_template("layouts/clientes.html")
 
 # main del programa
 if __name__ == "__main__":
