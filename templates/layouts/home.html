@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="static/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="icon" href="../static/img/Servientrega.png" type="image/png" sizes="32x32">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="{{ url_for('static', filename='js/secciones.js') }}"></script>
 
 
 
@@ -20,26 +22,16 @@
 <body>
 
     <div class="container">
-        <header class="row text-center justify-content-around p-3">
-            <div class="d-flex justify-content-center">
-                <img src="https://www.servientrega.com/wps/wcm/connect/6a8668e1-673c-4908-adfa-83b1180ae41a/logo-horizontal-color.png?MOD=AJPERES&CACHEID=ROOTWORKSPACE-6a8668e1-673c-4908-adfa-83b1180ae41a-nM1e-G4"
-                    class="img-fluid" style="max-width: 25%;" />
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-center font-weight-bold">Bienvenido a Servientrega</h3>
+                    <p class="text-center">Más de 27 años de experiencia en el mercado nacional e internacional,
+                        especializados en toda la cadena de abastecimiento ofreciendo los servicios profesionales de
+                        Logística Integral puerta a puerta dentro de nuestra cobertura.</p>
+                </div>
             </div>
-        </header>
-        <section id="navbar" class="row p-2 text-center">
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="#" class="font-weight-light link-unstyled">Home</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/clientes" class="font-weight-light link-unstyled">Clientes</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="/repartidores" class="font-weight-light link-unstyled">Repartidores</a>
-            </div>
-            <div class="col-3 navbar-link d-flex align-items-center justify-content-center">
-                <a href="#" class="font-weight-light link-unstyled">Pedidos</a>
-            </div>
-        </section>
+        </div>
 
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -56,27 +48,6 @@
 
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h3 class="text-center font-weight-bold">Bienvenido a Servientrega</h3>
-                    <p class="text-center">Más de 27 años de experiencia en el mercado nacional e internacional, especializados en toda la cadena de abastecimiento ofreciendo los servicios profesionales de Logística Integral puerta a puerta dentro de nuestra cobertura.</p>
-                </div>
-            </div>
-        </div>
-        
-        <footer class="bg-success py-4">
-            <div class="container text-center">
-                <h5>Síguenos en redes sociales:</h5>
-                <div class="mt-3">
-                    <a href="#" class="btn btn-light mx-2"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="btn btn-light mx-2"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="btn btn-light mx-2"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </footer>
-        
-        
     </div>
 
 
