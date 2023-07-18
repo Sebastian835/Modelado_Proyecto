@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
-from geopy.geocoders import Nominatim
+#from geopy.geocoders import Nominatim
+from geopy.geocoders import MapBox
 import os
 import pymongo
 from dotenv import load_dotenv
@@ -19,7 +20,8 @@ bdd = pymongo.MongoClient(MONGO_URI)
 baseDatos = bdd[MONGO_BASEDATOS]
 
 
-geolocator = Nominatim(user_agent='my_app')
+#geolocator = Nominatim(user_agent='my_app')
+geolocator = MapBox(api_key='pk.eyJ1IjoicGVkcmluZWxtZXJvNzciLCJhIjoiY2xrOG81ZHlwMGJvdjNkbzU2aXlpbmx0MiJ9.zDfZspDRGG16SJKUd6c1Qw')
 
 
 # Inicializar la aplicación
@@ -390,7 +392,7 @@ def UpdateRuta():
 @app.route("/pagos", methods=["GET", "POST"])  
 def pagos():
 
-    location = geolocator.geocode('Santo Domingo - Ecuador')
+    location = geolocator.geocode('Santo Domingo de los Tsachilas - Ecuador')  #------------------------DIRECCION API----------------------------
     latitude = location.latitude
     longitude = location.longitude
 
