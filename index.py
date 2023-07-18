@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for
+from geopy.geocoders import Nominatim
 import os
 import pymongo
 from dotenv import load_dotenv
@@ -16,6 +17,9 @@ MONGO_URI = os.getenv("MONGO_URI")
 MONGO_BASEDATOS = "ServiEntrega"  # nombre de la base de datos
 bdd = pymongo.MongoClient(MONGO_URI)
 baseDatos = bdd[MONGO_BASEDATOS]
+
+
+geolocator = Nominatim(user_agent='my_app')
 
 
 # Inicializar la aplicación
@@ -385,6 +389,13 @@ def UpdateRuta():
 #--PAGOS--
 @app.route("/pagos", methods=["GET", "POST"])  
 def pagos():
+
+    location = geolocator.geocode('Santo Domingo - Ecuador')
+    latitude = location.latitude
+    longitude = location.longitude
+
+
+
     pagos_collection = baseDatos["Pagos"]
     pagos = pagos_collection.find()
 
@@ -414,12 +425,12 @@ def pagos():
             id_Pago = request.form["_pago"]
             buscaPago = baseDatos.Pagos.find({"_id": id_Pago})
             
-            return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, pagoCliente=buscaPago)
+            return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, pagoCliente=buscaPago, latitude=latitude, longitude=longitude)
         
         except:
             print("Seco 5")
 
-    return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes)
+    return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, latitude=latitude, longitude=longitude)
 
 def NuevoPago(pedido):
     ultimo_documento = baseDatos.Rutas.find_one({}, sort=[('_id', -1)])
