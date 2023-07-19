@@ -9,12 +9,14 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="static/css/navbar.css">
     <link rel="stylesheet" href="static/css/clientes.css">
+    <link rel="stylesheet" href="static/css/pagos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="icon" href="../static/img/favicon.png" type="image/png" sizes="32x32">
     <script src="{{ url_for('static', filename='js/secciones.js') }}"></script>
 
     <title>ServiEntrega | Pagos</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     <style>
         .formulario {
             display: none;
@@ -112,13 +114,59 @@
 
         <br><br><br>
 
-
         <div>
+            <h3>Geolocalizacion</h3>
+            <br><br>
+            <div class="container" style="background-color: white; border-radius: 10px;" id="hiddenFormContainer">
+                <div class="container contact-form">
+                    <p> Seleccione el pedido que desea ver en el mapa</p>
+                    <form class="" action="/pagos" method="post">
+                        <select name="pedido">
+                            <option value=""></option>
+                            {% for i in pedidos_Loca %}
+                            <option value="{{ i._id }}">{{ i._id }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-success">Buscar</button>
+                    </form>
+                    <br><br>
+                    <form id="work">
+                        {% for i in pedidoEncontrado %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="Datos_Cliente" class="form-control"
+                                        placeholder="Datos Cliente" value="{{ i.IDCliente }}" readonly />
+                                </div>
 
-            <h1>Geolocalización</h1>
+                                <div class="form-group">
+                                    <input type="text" name="Destino" class="form-control" placeholder="Destino"
+                                        value="{{ i.DireccionDestino }}" readonly />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="Fecha_Hora" class="form-control"
+                                        placeholder="Fecha y Hora del Pedido" value="{{ i.FechaHoraPedido }}"
+                                        readonly />
+                                </div>
+                                <div class=" form-group">
+                                    <input type="text" name="Descripcion" class="form-control"
+                                        placeholder="Descripcion " value="{{ i.DescripcionPaquete }}" readonly />
+                                </div>
+                            </div>
+                            {% endfor %}
+                    </form>
+                </div>
+            </div>
+
+            <br><br>
+
             <div id="map"></div>
 
             <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+            <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
+
             <script>
                 mapboxgl.accessToken = 'pk.eyJ1IjoicGVkcmluZWxtZXJvNzciLCJhIjoiY2xrOG81ZHlwMGJvdjNkbzU2aXlpbmx0MiJ9.zDfZspDRGG16SJKUd6c1Qw';
 
@@ -136,10 +184,9 @@
                     .setLngLat([longitude, latitude])
                     .addTo(map);
             </script>
-        </div>
+            </br>
 
-    </div>
-    <br><br><br><br><br><br><br><br><br>
+            <br><br><br><br>
 
 
 </body>
@@ -154,6 +201,10 @@
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
 
-<script src="/static/js/pagos.js" charset="utf-8 "></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuHqHEvRkVKFS2rqabWZMEFDsgbSjz91g&libraries=places"></script>
+
+
+
 
 </html>

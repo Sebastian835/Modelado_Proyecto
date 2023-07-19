@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-#from geopy.geocoders import Nominatim
 from geopy.geocoders import MapBox
 import os
 import pymongo
@@ -19,9 +18,7 @@ MONGO_BASEDATOS = "ServiEntrega"  # nombre de la base de datos
 bdd = pymongo.MongoClient(MONGO_URI)
 baseDatos = bdd[MONGO_BASEDATOS]
 
-
-#geolocator = Nominatim(user_agent='my_app')
-geolocator = MapBox(api_key='pk.eyJ1IjoicGVkcmluZWxtZXJvNzciLCJhIjoiY2xrOG81ZHlwMGJvdjNkbzU2aXlpbmx0MiJ9.zDfZspDRGG16SJKUd6c1Qw')
+geolocator = MapBox(api_key='pk.eyJ1IjoicGVkcmluZWxtZXJvNzciLCJhIjoiY2xrOG81ZHlwMGJvdjNkbzU2aXlpbmx0MiJ9.zDfZspDRGG16SJKUd6c1Qw')  #----API---
 
 
 # Inicializar la aplicación
@@ -396,12 +393,11 @@ def pagos():
     latitude = location.latitude
     longitude = location.longitude
 
-
-
     pagos_collection = baseDatos["Pagos"]
     pagos = pagos_collection.find()
 
     pedidos_collection = baseDatos["Pedidos"]
+    pedidos_Localizacion = pedidos_collection.find()
 
     clientes_collection = baseDatos["Clientes"]
 
@@ -422,17 +418,36 @@ def pagos():
 
         pagos = pagos_collection.find()
 
+
     if request.method == "POST":
         try:
             id_Pago = request.form["_pago"]
             buscaPago = baseDatos.Pagos.find({"_id": id_Pago})
             
-            return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, pagoCliente=buscaPago, latitude=latitude, longitude=longitude)
-        
+            return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, pagoCliente=buscaPago, latitude=latitude, longitude=longitude, 
+                                   pedidos_Loca = pedidos_Localizacion)
         except:
             print("Seco 5")
 
-    return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, latitude=latitude, longitude=longitude)
+        try:
+            id_Pedido = request.form["pedido"]
+            buscaPedido = baseDatos.Pedidos.find({"_id": id_Pedido})
+            
+            dirr = buscaPedido[0]
+            dir_Des = dirr["DireccionDestino"]
+
+            direccionGEO = dir_Des + " - Santo Domingo de los Tsachilas - Ecuador"
+            location = geolocator.geocode(direccionGEO)  #------------------------DIRECCION API----------------------------
+            latitude = location.latitude
+            longitude = location.longitude
+
+            return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, 
+                                   pedidos_Loca = pedidos_Localizacion, pedidoEncontrado = buscaPedido,  latitude=latitude, longitude=longitude)
+        except:
+            print("Seco 6")
+
+    return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, latitude=latitude, longitude=longitude, 
+                           pedidos_Loca = pedidos_Localizacion)
 
 def NuevoPago(pedido):
     ultimo_documento = baseDatos.Rutas.find_one({}, sort=[('_id', -1)])

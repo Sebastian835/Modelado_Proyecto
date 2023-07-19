@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var footerHeading = document.createElement("h5");
   footerHeading.className = "text-white";
-  footerHeading.textContent = "Síguenos en redes sociales:";
+  footerHeading.textContent = "Síguenos en redes sociales";
 
   var socialIcons = document.createElement("div");
   socialIcons.className = "mt-3";
