@@ -5,6 +5,8 @@ import pymongo
 from dotenv import load_dotenv
 from datetime import datetime
 import random
+import mysql.connector
+
 
 
 load_dotenv()
@@ -420,6 +422,7 @@ def pagos():
 
 
     if request.method == "POST":
+
         try:
             id_Pago = request.form["_pago"]
             buscaPago = baseDatos.Pagos.find({"_id": id_Pago})
@@ -430,6 +433,15 @@ def pagos():
             print("Seco 5")
 
         try:
+            #CONEXION MYSQL
+            # Establecer la conexión
+            conexionMySql = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="12345",
+                database="ServiEntrega"
+            )
+
             id_Pedido = request.form["pedido"]
             buscaPedido = baseDatos.Pedidos.find({"_id": id_Pedido})
             
@@ -441,10 +453,44 @@ def pagos():
             latitude = location.latitude
             longitude = location.longitude
 
+            print((latitude),(longitude))
+            cursor = conexionMySql.cursor()
+            consulta = "SELECT MAX(id) FROM Geolocalizacion_Pedido"
+            cursor.execute(consulta)
+
+            resultado = cursor.fetchone()
+            ultimo_id = resultado[0]
+
+            if ultimo_id is None:
+                nuevo_id = 1
+            else:
+                nuevo_id = ultimo_id + 1
+
+
+            valores_busqueda = ("Santo Domingo de los Tsachilas", "Ecuador", latitude, longitude)
+            consulta_busqueda = "SELECT id FROM Geolocalizacion_Pedido WHERE Ciudad = %s AND Pais = %s AND latitud = %s AND longitud = %s"
+            cursor.execute(consulta_busqueda, valores_busqueda)
+
+
+            resultado = cursor.fetchone()
+
+            if resultado is None:
+                consulta = "INSERT INTO Geolocalizacion_Pedido (id, Direccion, Ciudad, Pais, latitud, longitud) VALUES (%s, %s, %s, %s, %s, %s)"
+                valores = (nuevo_id, dir_Des, "Santo Domingo de los Tsachilas", "Ecuador", latitude, longitude)
+            else:
+                consulta = "UPDATE Geolocalizacion_Pedido SET Direccion = %s WHERE id = %s"
+                valores = (dir_Des, resultado[0])
+
+            cursor.execute(consulta, valores)
+            conexionMySql.commit()
+
+            cursor.close()
+            conexionMySql.close()
+
             return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, 
                                    pedidos_Loca = pedidos_Localizacion, pedidoEncontrado = buscaPedido,  latitude=latitude, longitude=longitude)
-        except:
-            print("Seco 6")
+        except Exception as error:
+            print("Ocurrió un error:", error)
 
     return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, latitude=latitude, longitude=longitude, 
                            pedidos_Loca = pedidos_Localizacion)
