@@ -8,12 +8,7 @@ import random
 import mysql.connector
 
 
-
 load_dotenv()
-
-#MONGO_HOST="localhost"          #servidor local para la conexion
-#MONGO_PUERTO="27017"            #puerto para la conexion
-#MONGO_TIEMPO_FUERA=1000
 
 MONGO_URI = os.getenv("MONGO_URI")
 MONGO_BASEDATOS = "ServiEntrega"  # nombre de la base de datos
@@ -329,7 +324,47 @@ def UpdatePedido():
         destino = request.form['destino']
         descripcion = request.form['descripcion']
 
+        
+        try:
+            #CONEXION MYSQL
+            # Establecer la conexión
+            conexionMySql = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="12345",
+                database="ServiEntrega"
+            )
+            
+            cursor = conexionMySql.cursor()
+
+            pedidos_collection = baseDatos["Pedidos"]
+            resultadosPedidos = pedidos_collection.find({"_id": _id})
+
+            valores_busqueda = (resultadosPedidos[0].get("DireccionDestino"), "Santo Domingo de los Tsachilas", "Ecuador")
+            consulta_busqueda = "SELECT id FROM Geolocalizacion_Pedido WHERE Direccion = %s AND Ciudad = %s AND Pais = %s"
+            cursor.execute(consulta_busqueda, valores_busqueda)
+
+            resultado = cursor.fetchone()
+
+            if resultado is None:
+               print("Moreira")
+            else:
+                consulta = "UPDATE Geolocalizacion_Pedido SET Direccion = %s WHERE id = %s"
+                valores = (destino, resultado[0])
+                cursor.execute(consulta, valores)
+                conexionMySql.commit()
+
+            cursor.close()
+            conexionMySql.close()
+
+
+        except Exception as error:
+            print("Ocurrió un error:", error)
+        
+
         baseDatos["Pedidos"].update_one({"_id": _id}, {"$set": {"DireccionDestino": destino, "DescripcionPaquete": descripcion}})
+
+
 
         return redirect(url_for('clientes'))
 
@@ -406,6 +441,15 @@ def pagos():
     nombres_clientes = []
     nombres_clientes.clear()
 
+    fechas_clientes = []  
+    fechas_clientes.clear()
+
+    nombres_clientes_Geo = []
+    nombres_clientes_Geo.clear()
+
+    id_clientes_Geo = []
+    id_clientes_Geo.clear()
+
     for pago in pagos:
         id_pedido = pago["IDPedido"].id
         pedido = pedidos_collection.find_one({"_id": id_pedido})
@@ -442,8 +486,25 @@ def pagos():
                 database="ServiEntrega"
             )
 
+            
             id_Pedido = request.form["pedido"]
             buscaPedido = baseDatos.Pedidos.find({"_id": id_Pedido})
+
+            
+            for pedido in buscaPedido:
+                cliente_referenciado = clientes_collection.database.dereference(pedido["IDCliente"])
+                if cliente_referenciado:
+                    nombre_cliente = cliente_referenciado["Nombre"]
+                    id_clientes_Geo.append(cliente_referenciado["_id"])
+                    nombres_clientes_Geo.append(nombre_cliente)  
+                   
+
+                buscaPedido = baseDatos.Pedidos.find({"_id": id_Pedido})
+
+            fecha_hora_pedido = buscaPedido[0].get("FechaHoraPedido")
+            fecha_hora_formateada = datetime.strptime(fecha_hora_pedido, "%Y-%m-%dT%H:%M:%SZ")
+            fechaPedido= fecha_hora_formateada.strftime("%H:%M - %d/%m/%Y")
+            fechas_clientes.append(fechaPedido)  
             
             dirr = buscaPedido[0]
             dir_Des = dirr["DireccionDestino"]
@@ -453,7 +514,6 @@ def pagos():
             latitude = location.latitude
             longitude = location.longitude
 
-            print((latitude),(longitude))
             cursor = conexionMySql.cursor()
             consulta = "SELECT MAX(id) FROM Geolocalizacion_Pedido"
             cursor.execute(consulta)
@@ -475,8 +535,8 @@ def pagos():
             resultado = cursor.fetchone()
 
             if resultado is None:
-                consulta = "INSERT INTO Geolocalizacion_Pedido (id, Direccion, Ciudad, Pais, latitud, longitud) VALUES (%s, %s, %s, %s, %s, %s)"
-                valores = (nuevo_id, dir_Des, "Santo Domingo de los Tsachilas", "Ecuador", latitude, longitude)
+                consulta = "INSERT INTO Geolocalizacion_Pedido (id, Direccion, Ciudad, Pais, latitud, longitud, idCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                valores = (nuevo_id, dir_Des, "Santo Domingo de los Tsachilas", "Ecuador", latitude, longitude, id_clientes_Geo[0])
             else:
                 consulta = "UPDATE Geolocalizacion_Pedido SET Direccion = %s WHERE id = %s"
                 valores = (dir_Des, resultado[0])
@@ -488,7 +548,8 @@ def pagos():
             conexionMySql.close()
 
             return render_template("layouts/pagos.html", pagitos = pagos, nombrecitos = nombres_clientes, 
-                                   pedidos_Loca = pedidos_Localizacion, pedidoEncontrado = buscaPedido,  latitude=latitude, longitude=longitude)
+                                   pedidos_Loca = pedidos_Localizacion, pedidoEncontrado = buscaPedido,  latitude=latitude, longitude=longitude, fecha_clientesP=fechas_clientes,
+                                   nombres_clientes_GeoLoc=nombres_clientes_Geo)
         except Exception as error:
             print("Ocurrió un error:", error)
 
@@ -537,7 +598,6 @@ def UpdatePago():
 
 
     return render_template("layouts/pagos.html")
-
 
 
 

@@ -136,7 +136,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="Datos_Cliente" class="form-control"
-                                        placeholder="Datos Cliente" value="{{ i.IDCliente }}" readonly />
+                                        placeholder="Datos Cliente" value="({{ i.IDCliente.id}}){% if loop.index - 1 < nombres_clientes_GeoLoc|length %} {{ nombres_clientes_GeoLoc[loop.index
+                                            - 1] }}{% endif %}" readonly />
                                 </div>
 
                                 <div class="form-group">
@@ -147,8 +148,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="Fecha_Hora" class="form-control"
-                                        placeholder="Fecha y Hora del Pedido" value="{{ i.FechaHoraPedido }}"
-                                        readonly />
+                                        placeholder="Fecha y Hora del Pedido" value="{% if loop.index - 1 < fecha_clientesP|length %} {{ fecha_clientesP[loop.index - 1] }}{%
+                                            endif %} " readonly />
                                 </div>
                                 <div class=" form-group">
                                     <input type="text" name="Descripcion" class="form-control"
