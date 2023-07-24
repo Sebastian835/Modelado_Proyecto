@@ -490,9 +490,10 @@ def pagos():
             id_Pedido = request.form["pedido"]
             buscaPedido = baseDatos.Pedidos.find({"_id": id_Pedido})
 
-            
             for pedido in buscaPedido:
                 cliente_referenciado = clientes_collection.database.dereference(pedido["IDCliente"])
+                
+
                 if cliente_referenciado:
                     nombre_cliente = cliente_referenciado["Nombre"]
                     id_clientes_Geo.append(cliente_referenciado["_id"])
@@ -535,8 +536,8 @@ def pagos():
             resultado = cursor.fetchone()
 
             if resultado is None:
-                consulta = "INSERT INTO Geolocalizacion_Pedido (id, Direccion, Ciudad, Pais, latitud, longitud, idCliente) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                valores = (nuevo_id, dir_Des, "Santo Domingo de los Tsachilas", "Ecuador", latitude, longitude, id_clientes_Geo[0])
+                consulta = "INSERT INTO Geolocalizacion_Pedido (id, Direccion, Ciudad, Pais, latitud, longitud, id_Pedido) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                valores = (nuevo_id, dir_Des, "Santo Domingo de los Tsachilas", "Ecuador", latitude, longitude, buscaPedido[0].get("_id"))
             else:
                 consulta = "UPDATE Geolocalizacion_Pedido SET Direccion = %s WHERE id = %s"
                 valores = (dir_Des, resultado[0])
