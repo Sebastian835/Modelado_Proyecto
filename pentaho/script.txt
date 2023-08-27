@@ -1,0 +1,99 @@
+CREATE TABLE IF NOT EXISTS Repartidores (
+    id INT PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Apellido VARCHAR(50),
+    Cedula bigint ,
+    NumeroTelefono VARCHAR(15),
+    Tipo VARCHAR(50),
+    Marca VARCHAR(50),
+    Modelo VARCHAR(50),
+    Placa VARCHAR(20),
+    Observaciones TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Clientes (
+    id int PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Apellido VARCHAR(50),
+    Direccion VARCHAR(100),
+    NumeroTelefono VARCHAR(15),
+    CorreoElectronico VARCHAR(100),
+    Cedula bigint,
+    Observaciones TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Pedidos (
+    id int PRIMARY KEY,
+    Id_Cliente INTEGER,
+    FechaHoraPedido TIMESTAMP,
+    DireccionDestino VARCHAR(100),
+    DescripcionPaquete TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Rutas (
+    id int PRIMARY KEY,
+    Id_Repartidor INTEGER,
+    Id_Pedido INTEGER,
+    Estado VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS Pagos (
+    id int PRIMARY KEY,
+    Id_Pedido int ,
+    Monto int,
+    MetodoPago VARCHAR(50),
+    Pagado BOOLEAN
+);
+
+ALTER TABLE pedidos ADD FOREIGN KEY (Id_Cliente) REFERENCES Clientes(id);
+ALTER TABLE Rutas ADD FOREIGN KEY (Id_Repartidor) REFERENCES Repartidores(id);
+ALTER TABLE Rutas ADD FOREIGN KEY (Id_Pedido) REFERENCES Pedidos(id);
+ALTER TABLE Pagos ADD FOREIGN KEY (Id_Pedido) REFERENCES Pedidos(id);
+
+
+drop table clientes;
+drop table repartidores;
+drop table pedidos;
+drop table Rutas;
+drop table pagos;
+
+select * from clientes;
+select * from repartidores;
+select * from pedidos;
+select * from rutas;
+select * from pagos;
+
+
+select c.nombre, p.descripcionpaquete  from pedidos p 
+inner join clientes c on p.id_cliente = c.id 
+
+--TABLA DE LA API--
+
+CREATE TABLE IF NOT EXISTS Geolocalizacion (
+    id INT PRIMARY KEY,
+    Direccion VARCHAR(100),
+    Ciudad VARCHAR(50),
+    Pais VARCHAR(50),
+    Latitud NUMERIC(10, 6),
+    Longitud NUMERIC(10, 6),
+    Id_Pedido INT
+);
+ALTER TABLE Geolocalizacion ADD FOREIGN KEY (Id_Pedido) REFERENCES Pedidos(id);
+
+
+
+drop table Geolocalizacion;
+
+select * from Geolocalizacion;
+
+
+
+
+'
+DROP TABLE IF EXISTS Geolocalizacion CASCADE;
+DROP TABLE IF EXISTS rutas CASCADE;
+DROP TABLE IF EXISTS pagos CASCADE;
+DROP TABLE IF EXISTS pedidos CASCADE;
+DROP TABLE IF EXISTS clientes CASCADE;
+DROP TABLE IF EXISTS repartidores CASCADE;
+'

@@ -344,8 +344,8 @@
       <attributes/>
       <start>Y</start>
       <dummy>N</dummy>
-      <repeat>Y</repeat>
-      <schedulerType>2</schedulerType>
+      <repeat>N</repeat>
+      <schedulerType>0</schedulerType>
       <intervalSeconds>0</intervalSeconds>
       <intervalMinutes>60</intervalMinutes>
       <hour>3</hour>
@@ -444,7 +444,7 @@
       <attributes/>
       <server>smtp.gmail.com</server>
       <port>587</port>
-      <destination>ag2534787@gmail.com</destination>
+      <destination>dslopez5@espe.edu.ec</destination>
       <destinationCc/>
       <destinationBCc/>
       <replyto>david20010079@gmail.com</replyto>
@@ -546,7 +546,7 @@ DROP TABLE IF EXISTS repartidores CASCADE;</sql>
       <attributes/>
       <server>smtp.gmail.com</server>
       <port>587</port>
-      <destination>ag2534787@gmail.com</destination>
+      <destination>dslopez5@espe.edu.ec</destination>
       <destinationCc/>
       <destinationBCc/>
       <replyto>david20010079@gmail.com</replyto>
